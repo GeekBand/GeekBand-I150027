@@ -11,7 +11,7 @@
 
 @implementation MRMainMessageCell
 
-#pragma Class Custom Method
+#pragma mark - Class Custom Method
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -61,22 +61,22 @@
 
 
 - (void)addLocationView {
-    UIView * locationView = [[UIView alloc] initWithFrame:CGRectMake(MRMessageLocationViewLeftMargin, 0, self.frame.size.width - MRMessageLocationViewLeftMargin - MRMessageLocationViewRightMargin, MRMessageLocationViewHeight)];
+    self.locationView = [[UIView alloc] initWithFrame:CGRectMake(MRMessageLocationViewLeftMargin, 0, self.frame.size.width - MRMessageLocationViewLeftMargin - MRMessageLocationViewRightMargin, MRMessageLocationViewHeight)];
     
     //添加图片
-    [locationView addSubview:[self addLocationImage]];
+    [self.locationView addSubview:[self addLocationImage]];
     
     //添加标签
     self.location = [self addLocationLabel];
-    [locationView addSubview:self.location];
+    [self.locationView addSubview:self.location];
     
-    [self.contentView addSubview:locationView];
+    [self.contentView addSubview:self.locationView];
     
     //增加边线
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, MRMessageLocationViewHeight, locationView.frame.size.width, 1.0f);
+    bottomBorder.frame = CGRectMake(0, MRMessageLocationViewHeight, self.locationView.frame.size.width, 1.0f);
     bottomBorder.backgroundColor = [UIColor colorwithHex:0xd5d5d5].CGColor;
-    [locationView.layer addSublayer:bottomBorder];
+    [self.locationView.layer addSublayer:bottomBorder];
 
 }
 
@@ -121,6 +121,12 @@
 
 
 - (void)cleanComponents {
+
+#warning Potentially incomplete method implementation.
+//    self.location = nil;
+//    self.imageScrollView = nil;
+//    self.locationView = nil;
+    
     
 }
 
@@ -129,8 +135,14 @@
 }
 
 - (void)setImageScrollViewImageWithText:(NSArray *)imageWithTextArray IndexPath:(NSIndexPath *)indexPath {
+    //设置代理
+    self.imageScrollView._delegate = self._delegate;
+    
     [self.imageScrollView setWithImageWithTextArray:imageWithTextArray IndexPath:indexPath];
 
 }
+
+#pragma mark - MRMainMessageImageButtonDelegate Methods
+
 
 @end

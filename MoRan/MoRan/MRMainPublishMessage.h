@@ -14,6 +14,6 @@
 @property(nonatomic, copy)NSString * locationText;
 @property(nonatomic, strong)NSArray * imageArrayWithText;
 
-- (instancetype)initWithLoctionText:(NSString *)locationText ImageArray:(NSArray *)imageArray TextArray:(NSArray *)textArray;
+//- (instancetype)initWithLoctionText:(NSString *)locationText ImageArray:(NSArray *)imageArray TextArray:(NSArray *)textArray;
 
 @end

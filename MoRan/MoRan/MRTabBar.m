@@ -119,4 +119,12 @@
 
 #pragma mark DelegateMethod
 
+- (void)publishButtonClicked:(UIButton *)button {
+    
+    if (self._delegate && [(NSObject *)self._delegate respondsToSelector:@selector(publishButtonClicked:)]) {
+        [self._delegate publishButtonClicked:button];
+    }
+}
+
+
 @end

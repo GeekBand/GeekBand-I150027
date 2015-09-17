@@ -14,21 +14,21 @@
 #import "MRMainPublishMessage.h"
 #import "UIColor+ColorWithHex.h"
 
-@class MRMainMessageImageScrollView;
+
+
+
+
+
 
 @interface MRMainMessageImageScrollView : UIScrollView
 
 
-@property(nonatomic, strong)NSArray * imageWithTextArray;
+@property(nonatomic, strong)NSMutableArray * imageArray;
+@property(nonatomic, strong)NSMutableArray * textArray;
+@property(nonatomic, strong)id<MRMainMessageImageButtonDelegate> _delegate;
 
 
 - (void)setWithImageWithTextArray:(NSArray *)array IndexPath:(NSIndexPath *)indexPath;
 
 @end
 
-@protocol MRMainMessageImageScrollViewDelegate <NSObject>
-
-@required
-- (void)imageButtonClicked:(MRMainMessageImageButton *)button;
-
-@end

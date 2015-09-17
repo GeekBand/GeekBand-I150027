@@ -20,7 +20,7 @@
 }
 
 //- (CGSize)sizeThatFits:(CGSize)size {
-//    CGSize newSize = CGSizeMake(self.frame.size.width,MRNavigationBarHeight);
+//    CGSize newSize = CGSizeMake(self.frame.size.width,34);
 //    return newSize;
 //}
 

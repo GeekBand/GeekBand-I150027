@@ -15,7 +15,7 @@
         
         self.messageArray = [[NSMutableArray alloc] init];
         
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 5; i++) {
             
             MRMainPublishMessage *message = [[MRMainPublishMessage alloc] init];
             message.locationText = [NSString stringWithFormat:@"第%i行", i];

@@ -12,7 +12,7 @@
 
 - (void)setBottomBorderWidth:(CGFloat)width Color:(CGColorRef)color {
     CALayer *bottomBorder = [CALayer layer];
-    bottomBorder.frame = CGRectMake(0, self.frame.size.height, self.frame.size.width, width);
+    bottomBorder.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, width);
     bottomBorder.backgroundColor = color;
     [self addSublayer:bottomBorder];
 }

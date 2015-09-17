@@ -16,7 +16,7 @@
 
 @class MRTabBar;
 
-@protocol MRTabBarDelegate <UITabBarDelegate>
+@protocol MRTabBarDelegate <NSObject>
 
 @required
 - (void)publishButtonClicked:(UIButton *)publishButton;
@@ -25,6 +25,8 @@
 
 
 @interface MRTabBar : UITabBar
+
+@property(nonatomic, strong)id<MRTabBarDelegate> _delegate;
 
 - (void)initTextAttribute;
 

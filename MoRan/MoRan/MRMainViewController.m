@@ -7,6 +7,7 @@
 //
 
 #import "MRMainViewController.h"
+#import "MRPublishTableViewController.h"
 
 
 @interface MRMainViewController ()
@@ -33,8 +34,6 @@
 
 #pragma TabBarDelegate Methods
 
-- (void)publishButtonClicked:(UIButton *)publishButton {
-    
-}
+
 
 @end

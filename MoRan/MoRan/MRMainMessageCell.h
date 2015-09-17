@@ -12,18 +12,19 @@
 #import "UIFont+Bold.h"
 #import "MRMainMessageImageScrollView.h"
 #import "CALayer+Border.h"
+#import "MRMainMessageImageButton.h"
 
 
 
-@class MRMainMessageCell;
-@class MRMainMessageImageButton;
+
+
 
 @interface MRMainMessageCell : UITableViewCell
 
-
+@property(nonatomic, strong)UIView * locationView;
 @property(nonatomic, strong)UILabel * location;
-@property(nonatomic, strong)MRMainMessageImageScrollView *imageScrollView;
-
+@property(nonatomic, strong)MRMainMessageImageScrollView * imageScrollView;
+@property(nonatomic, strong)id<MRMainMessageImageButtonDelegate> _delegate;
 
 - (void)setLocationText:(NSString *)locationText;
 - (void)setImageScrollViewImageWithText:(NSArray *)imageWithTextArray IndexPath:(NSIndexPath *)indexPath;
@@ -35,11 +36,6 @@
 - (UILabel *)addLocationLabel;
 - (void)addScrollView;
 
-@end
-
-
-@protocol MRMainMessageCell <NSObject>
-
-- (void)imageButtonClicked:(MRMainMessageImageButton *)imageButton;
 
 @end
+

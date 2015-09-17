@@ -11,14 +11,14 @@
 
 @implementation MRMainMessageImageScrollView
 
-#pragma Custom Class Method
+@synthesize _delegate = __delegate;
+
+#pragma mark - Custom Class Method
 
 - (void)setWithImageWithTextArray:(NSArray *)array IndexPath:(NSIndexPath *)indexPath {
     
 
     if(array == nil)return;
-    
-    self.imageWithTextArray = array;
     
     self.contentSize = CGSizeMake((MRMessagePublishImageWidth + MRMessagePublishImageInterval) * [array count] - MRMessagePublishImageInterval, MRMessageScrollViewHeight);
     self.pagingEnabled = NO;
@@ -44,6 +44,8 @@
             MRMainMessageImageButton * imageView = [[MRMainMessageImageButton alloc] initWithArray:array IndexPath:indexPath ArrayNum:i];
             imageView.frame = CGRectMake(0, 0, MRMessagePublishImageWidth, MRMessagePublishImageHeight);
             imageView.backgroundColor = [UIColor clearColor];
+            imageView._delegate = self._delegate;
+            [self.imageArray addObject:imageView];
             [view addSubview:imageView];
             
             //添加文字
@@ -55,6 +57,7 @@
             label.backgroundColor = [UIColor clearColor];
 //            label.textColor = [UIColor colorwithHex:0x444444];
             label.text = [(MRImageWithText *)array[i] text];
+            [self.textArray addObject:label];
             [view addSubview:label];
             
             

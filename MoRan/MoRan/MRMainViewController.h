@@ -11,7 +11,7 @@
 #import "MRMineViewController.h"
 #import "MRTabBar.h"
 
-@interface MRMainViewController : UITabBarController < MRTabBarDelegate >
+@interface MRMainViewController : UITabBarController
 
 @property (weak, nonatomic) IBOutlet UITabBar *mainTabBar;
 

@@ -7,10 +7,14 @@
 //
 
 #import "MRMainTableViewController.h"
+#import "MRMainMessageCell.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "MRPublishTableViewController.h"
+#import "MRPictureDetailTableViewController.h"
 
 @implementation MRMainTableViewController
 
-#pragma View Lifecycle
+#pragma mark - View Lifecycle
 
 - (void)viewDidLoad {
     
@@ -24,17 +28,25 @@
     
 }
 
-#pragma Custom Class Methods
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    ((MRTabBar *)self.tabBarController.tabBar)._delegate = self;
+}
+
+#pragma mark - Custom Class Methods
 
 - (void)createMessageData {
     
 }
 
-#pragma Custom Event Methods
+#pragma mark - Custom Event Methods
 
 
 
-#pragma UITableViewDelegate and UITableViewDataSourceDelegate Methods
+
+#pragma mark - UITableViewDelegate and UITableViewDataSourceDelegate Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -71,7 +83,7 @@
     if (cell == nil) {
         cell = [[MRMainMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 //        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-//        cell.delegate = self;
+        cell._delegate = self;
     }
     
     [cell cleanComponents];
@@ -137,12 +149,96 @@
 
 
 
-#pragma MRMainMessageImageScrollViewDelegate Methods
+#pragma mark - MRMainMessageImageButtonDelegate Methods
 
 - (void)imageButtonClicked:(MRMainMessageImageButton *)button {
     
-    MRMainPublishMessage *message = [_messageArray objectAtIndex:button.cellRow];
-    MRImageWithText * info = message.imageArrayWithText[button.arrayNum];
+    MRMainPublishMessage *message = [_messageArray objectAtIndex:button.cellSection];
+    self.info = message.imageArrayWithText[button.arrayNum];
+    
+    [self performSegueWithIdentifier:@"PictureDetail" sender:self];
+}
+
+#pragma mark - MRTabBarDelegate Method
+
+- (void)publishButtonClicked:(UIButton *)publishButton {
+    
+#warning Potentially incomplete method implementation.
+    
+    //设置照相
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
+        [imagePicker setDelegate:self];
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        
+        self.imageIsFromCamera = true;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        
+        
+        self.imageIsFromCamera = false;
+        
+        [self goToPublishView];
+    }
+    
+   
+}
+
+- (void)goToPublishView {
+
+#warning Potentially incomplete method implementation.
+    [self performSegueWithIdentifier:@"Publish" sender:self];
+    
+
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+#warning Potentially incomplete method implementation.
+    
+    //存储图片
+    NSString * type = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if([type isEqualToString:(NSString *)kUTTypeImage]) {
+        UIImage * original = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        self.takenImage = original;
+        //保存图片
+        if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)UIImageWriteToSavedPhotosAlbum(original, self, nil, nil);
+    }
+    
+    [self dismissViewControllerAnimated:NO completion:^(void){
+        
+        [self goToPublishView];
+    }];
+    
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark - Segue Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"Publish"]) {
+        MRPublishTableViewController * vc = segue.destinationViewController;
+        
+        vc.takenImage = self.takenImage;
+        vc.imageIsFromCamera = self.imageIsFromCamera;
+    } else if ([[segue identifier] isEqualToString:@"PictureDetail"]) {
+        MRPictureDetailTableViewController * vc = segue.destinationViewController;
+        
+        vc.message = self.info;
+    }
 }
 
 @end

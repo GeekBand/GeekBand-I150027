@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MRImageWithText.h"
+
+@class MRMainMessageImageButton;
+@protocol MRMainMessageImageButtonDelegate;
+
+
+@protocol MRMainMessageImageButtonDelegate <NSObject>
+
+
+- (void)imageButtonClicked:(MRMainMessageImageButton *)imageButton;
+
+@end
 
 
 
@@ -17,7 +27,9 @@
 @property(nonatomic, assign)NSInteger cellRow;
 @property(nonatomic, assign)NSInteger cellSection;
 @property(nonatomic, assign)NSInteger arrayNum;
+@property(nonatomic, strong)id<MRMainMessageImageButtonDelegate> _delegate;
 
 - (instancetype)initWithArray:(NSArray *)array IndexPath:(NSIndexPath *)indexPath ArrayNum:(NSInteger)arrayNum;
 
 @end
+

@@ -7,16 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MRMainMessageCell.h"
-#import "MRMainMessageImageButton.h"
-#import "MRMainMessageImageScrollView.h"
 #import "MRMessageArray.h"
+#import "MRMainMessageImageButton.h"
+#import "MRTabBar.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface MRMainTableViewController : UITableViewController < UITableViewDelegate,
-UITableViewDataSource, MRMainMessageImageScrollViewDelegate >
+
+
+@interface MRMainTableViewController : UITableViewController < UITableViewDelegate, UITableViewDataSource, MRMainMessageImageButtonDelegate, MRTabBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate >
+
 
 @property(nonatomic, strong)MRMessageArray * messageArray;
+@property(nonatomic, strong)UIImage * takenImage;
+@property(nonatomic, assign)BOOL imageIsFromCamera;
+@property(nonatomic ,strong)MRImageWithText * info;
 
-- (void)createMessageData;
+
 
 @end
