@@ -10,4 +10,4 @@
 #import "PictureDetailSetting.h"
 
 
-CGFloat const MRDetailTextCellHeightExceptPublishText = 210 - 16;
+CGFloat const MRDetailTextCellHeightExceptPublishText = 89;

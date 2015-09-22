@@ -21,6 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     [self setComponents];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -29,6 +30,17 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    self.tabBarController.tabBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    self.tabBarController.tabBar.hidden = NO;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -67,7 +79,7 @@
     CGFloat height;
     if (indexPath.row == 0) {
         UIImageView * view = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:self.message.imagePath]];
-        height = tableView.frame.size.width * view.frame.size.height / view.frame.size.height;
+        height = tableView.frame.size.width * view.frame.size.height / view.frame.size.width;
     } else {
         height = MRDetailTextCellHeightExceptPublishText + [TextUtilities calculateHeightWithText:self.message.text TextWidth:self.publishText.frame.size.width Font:self.publishText.font];
     }

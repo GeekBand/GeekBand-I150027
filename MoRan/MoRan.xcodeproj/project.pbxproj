@@ -15,11 +15,21 @@
 		525C14371B849077007CFF6B /* MoRanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 525C14361B849077007CFF6B /* MoRanTests.m */; };
 		529165E01B895A18007E764B /* MRSquareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529165DF1B895A18007E764B /* MRSquareViewController.m */; };
 		529165EE1B8965D1007E764B /* MRMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 529165ED1B8965D1007E764B /* MRMineViewController.m */; };
+		529613F21BABE6A400BA0822 /* MRRequestModelSignUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 529613F11BABE6A400BA0822 /* MRRequestModelSignUp.m */; settings = {ASSET_TAGS = (); }; };
+		529613F51BABE8D500BA0822 /* MRSyncRequestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 529613F41BABE8D500BA0822 /* MRSyncRequestBase.m */; settings = {ASSET_TAGS = (); }; };
+		529613F81BABEECB00BA0822 /* BLMultipartForm.m in Sources */ = {isa = PBXBuildFile; fileRef = 529613F71BABEECB00BA0822 /* BLMultipartForm.m */; settings = {ASSET_TAGS = (); }; };
+		529613FB1BAC019400BA0822 /* MRResponseSignUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 529613FA1BAC019400BA0822 /* MRResponseSignUp.m */; settings = {ASSET_TAGS = (); }; };
+		529613FE1BAC01F900BA0822 /* MRResponseSignUpData.m in Sources */ = {isa = PBXBuildFile; fileRef = 529613FD1BAC01F900BA0822 /* MRResponseSignUpData.m */; settings = {ASSET_TAGS = (); }; };
+		529614011BAC400000BA0822 /* NetworkRequestSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 529614001BAC400000BA0822 /* NetworkRequestSetting.m */; settings = {ASSET_TAGS = (); }; };
+		529614051BAD277E00BA0822 /* littleYellow.gif in Resources */ = {isa = PBXBuildFile; fileRef = 529614041BAD277E00BA0822 /* littleYellow.gif */; settings = {ASSET_TAGS = (); }; };
 		52C43DB21BA478E000CFE36A /* MRAccountInfoTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DB11BA478E000CFE36A /* MRAccountInfoTool.m */; settings = {ASSET_TAGS = (); }; };
 		52C43DB81BA5414500CFE36A /* MRAccountInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DB71BA5414500CFE36A /* MRAccountInfo.m */; settings = {ASSET_TAGS = (); }; };
 		52C43DBB1BA54D5000CFE36A /* MRNetworkinigTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DBA1BA54D5000CFE36A /* MRNetworkinigTool.m */; settings = {ASSET_TAGS = (); }; };
 		52C43DC21BA6959E00CFE36A /* MRLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DC11BA6959E00CFE36A /* MRLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		52C43DC61BA6C68F00CFE36A /* MRSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DC51BA6C68F00CFE36A /* MRSignUpViewController.m */; settings = {ASSET_TAGS = (); }; };
+		52C43DC91BAAB07A00CFE36A /* MRRequestModelBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DC81BAAB07A00CFE36A /* MRRequestModelBase.m */; settings = {ASSET_TAGS = (); }; };
+		52C43DCD1BAABB8400CFE36A /* MRRequestLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DCC1BAABB8400CFE36A /* MRRequestLogin.m */; settings = {ASSET_TAGS = (); }; };
+		52C43DD11BAABBD100CFE36A /* MRRequestSignUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 52C43DD01BAABBD100CFE36A /* MRRequestSignUp.m */; settings = {ASSET_TAGS = (); }; };
 		52D9F5CB1B89D80A00A531C1 /* MRTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D9F5CA1B89D80A00A531C1 /* MRTabBar.m */; };
 		52D9F5CE1B8B288700A531C1 /* MainviewSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 52D9F5CD1B8B288700A531C1 /* MainviewSetting.m */; };
 		52EBA4301B92FE0300DC0017 /* MRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 52EBA42F1B92FE0300DC0017 /* MRNavigationBar.m */; };
@@ -81,6 +91,19 @@
 		529165DF1B895A18007E764B /* MRSquareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRSquareViewController.m; sourceTree = "<group>"; };
 		529165EC1B8965D1007E764B /* MRMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRMineViewController.h; sourceTree = "<group>"; };
 		529165ED1B8965D1007E764B /* MRMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRMineViewController.m; sourceTree = "<group>"; };
+		529613F01BABE6A400BA0822 /* MRRequestModelSignUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestModelSignUp.h; sourceTree = "<group>"; };
+		529613F11BABE6A400BA0822 /* MRRequestModelSignUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestModelSignUp.m; sourceTree = "<group>"; };
+		529613F31BABE8D500BA0822 /* MRSyncRequestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRSyncRequestBase.h; sourceTree = "<group>"; };
+		529613F41BABE8D500BA0822 /* MRSyncRequestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRSyncRequestBase.m; sourceTree = "<group>"; };
+		529613F61BABEECB00BA0822 /* BLMultipartForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLMultipartForm.h; sourceTree = "<group>"; };
+		529613F71BABEECB00BA0822 /* BLMultipartForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLMultipartForm.m; sourceTree = "<group>"; };
+		529613F91BAC019400BA0822 /* MRResponseSignUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRResponseSignUp.h; sourceTree = "<group>"; };
+		529613FA1BAC019400BA0822 /* MRResponseSignUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRResponseSignUp.m; sourceTree = "<group>"; };
+		529613FC1BAC01F900BA0822 /* MRResponseSignUpData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRResponseSignUpData.h; sourceTree = "<group>"; };
+		529613FD1BAC01F900BA0822 /* MRResponseSignUpData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRResponseSignUpData.m; sourceTree = "<group>"; };
+		529613FF1BAC400000BA0822 /* NetworkRequestSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkRequestSetting.h; sourceTree = "<group>"; };
+		529614001BAC400000BA0822 /* NetworkRequestSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkRequestSetting.m; sourceTree = "<group>"; };
+		529614041BAD277E00BA0822 /* littleYellow.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = littleYellow.gif; sourceTree = "<group>"; };
 		52C43DB01BA478E000CFE36A /* MRAccountInfoTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAccountInfoTool.h; sourceTree = "<group>"; };
 		52C43DB11BA478E000CFE36A /* MRAccountInfoTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRAccountInfoTool.m; sourceTree = "<group>"; };
 		52C43DB61BA5414500CFE36A /* MRAccountInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRAccountInfo.h; sourceTree = "<group>"; };
@@ -91,6 +114,12 @@
 		52C43DC11BA6959E00CFE36A /* MRLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRLoginViewController.m; sourceTree = "<group>"; };
 		52C43DC41BA6C68F00CFE36A /* MRSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRSignUpViewController.h; sourceTree = "<group>"; };
 		52C43DC51BA6C68F00CFE36A /* MRSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRSignUpViewController.m; sourceTree = "<group>"; };
+		52C43DC71BAAB07A00CFE36A /* MRRequestModelBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestModelBase.h; sourceTree = "<group>"; };
+		52C43DC81BAAB07A00CFE36A /* MRRequestModelBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestModelBase.m; sourceTree = "<group>"; };
+		52C43DCB1BAABB8400CFE36A /* MRRequestLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestLogin.h; sourceTree = "<group>"; };
+		52C43DCC1BAABB8400CFE36A /* MRRequestLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestLogin.m; sourceTree = "<group>"; };
+		52C43DCF1BAABBD100CFE36A /* MRRequestSignUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestSignUp.h; sourceTree = "<group>"; };
+		52C43DD01BAABBD100CFE36A /* MRRequestSignUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestSignUp.m; sourceTree = "<group>"; };
 		52D9F5C91B89D80A00A531C1 /* MRTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTabBar.h; sourceTree = "<group>"; };
 		52D9F5CA1B89D80A00A531C1 /* MRTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTabBar.m; sourceTree = "<group>"; };
 		52D9F5CC1B89EDEA00A531C1 /* MainviewSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainviewSetting.h; sourceTree = "<group>"; };
@@ -294,6 +323,8 @@
 				52EBA4721B9AB22900DC0017 /* PublishViewSetting.m */,
 				52EBA4861B9FDCCA00DC0017 /* PictureDetailSetting.h */,
 				52EBA4871B9FDCCA00DC0017 /* PictureDetailSetting.m */,
+				529613FF1BAC400000BA0822 /* NetworkRequestSetting.h */,
+				529614001BAC400000BA0822 /* NetworkRequestSetting.m */,
 			);
 			name = Global;
 			sourceTree = "<group>";
@@ -319,6 +350,12 @@
 		525C14481B86E6A7007CFF6B /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				52C43DC71BAAB07A00CFE36A /* MRRequestModelBase.h */,
+				52C43DC81BAAB07A00CFE36A /* MRRequestModelBase.m */,
+				529613F31BABE8D500BA0822 /* MRSyncRequestBase.h */,
+				529613F41BABE8D500BA0822 /* MRSyncRequestBase.m */,
+				52C43DCA1BAABA8200CFE36A /* SignUp */,
+				52C43DCE1BAABBAD00CFE36A /* Login */,
 			);
 			name = Requests;
 			sourceTree = "<group>";
@@ -326,6 +363,8 @@
 		525C14491B86E6B8007CFF6B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				529613F61BABEECB00BA0822 /* BLMultipartForm.h */,
+				529613F71BABEECB00BA0822 /* BLMultipartForm.m */,
 				52C43DB01BA478E000CFE36A /* MRAccountInfoTool.h */,
 				52C43DB11BA478E000CFE36A /* MRAccountInfoTool.m */,
 				52EBA4461B946A9C00DC0017 /* TextUtilities.h */,
@@ -342,6 +381,7 @@
 				52EBA4561B96DFC800DC0017 /* 1.png */,
 				52EBA4581B96DFD700DC0017 /* 2.png */,
 				52EBA4801B9EFB8600DC0017 /* backButton.png */,
+				529614041BAD277E00BA0822 /* littleYellow.gif */,
 				525C14271B849077007CFF6B /* Images.xcassets */,
 			);
 			name = Images;
@@ -353,6 +393,19 @@
 				52EBA4891B9FFB1E00DC0017 /* Main.storyboard */,
 			);
 			name = XIBs;
+			sourceTree = "<group>";
+		};
+		529613EF1BABE64000BA0822 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				529613F01BABE6A400BA0822 /* MRRequestModelSignUp.h */,
+				529613F11BABE6A400BA0822 /* MRRequestModelSignUp.m */,
+				529613F91BAC019400BA0822 /* MRResponseSignUp.h */,
+				529613FA1BAC019400BA0822 /* MRResponseSignUp.m */,
+				529613FC1BAC01F900BA0822 /* MRResponseSignUpData.h */,
+				529613FD1BAC01F900BA0822 /* MRResponseSignUpData.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		52C43DAE1BA476C800CFE36A /* Category */ = {
@@ -424,6 +477,25 @@
 				52C43DC51BA6C68F00CFE36A /* MRSignUpViewController.m */,
 			);
 			name = SignUpViewControllers;
+			sourceTree = "<group>";
+		};
+		52C43DCA1BAABA8200CFE36A /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				529613EF1BABE64000BA0822 /* Models */,
+				52C43DCF1BAABBD100CFE36A /* MRRequestSignUp.h */,
+				52C43DD01BAABBD100CFE36A /* MRRequestSignUp.m */,
+			);
+			name = SignUp;
+			sourceTree = "<group>";
+		};
+		52C43DCE1BAABBAD00CFE36A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				52C43DCB1BAABB8400CFE36A /* MRRequestLogin.h */,
+				52C43DCC1BAABB8400CFE36A /* MRRequestLogin.m */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		52D9F5C81B89D60300A531C1 /* Views */ = {
@@ -605,6 +677,7 @@
 				52EBA4591B96DFD700DC0017 /* 2.png in Resources */,
 				52EBA4571B96DFC800DC0017 /* 1.png in Resources */,
 				52EBA48A1B9FFB1E00DC0017 /* Main.storyboard in Resources */,
+				529614051BAD277E00BA0822 /* littleYellow.gif in Resources */,
 				52EBA4811B9EFB8600DC0017 /* backButton.png in Resources */,
 				525C142B1B849077007CFF6B /* LaunchScreen.xib in Resources */,
 				525C14281B849077007CFF6B /* Images.xcassets in Resources */,
@@ -664,6 +737,7 @@
 				52D9F5CB1B89D80A00A531C1 /* MRTabBar.m in Sources */,
 				52C43DC61BA6C68F00CFE36A /* MRSignUpViewController.m in Sources */,
 				525C14231B849077007CFF6B /* MRMainViewController.m in Sources */,
+				529613F51BABE8D500BA0822 /* MRSyncRequestBase.m in Sources */,
 				52EBA4901BA0307300DC0017 /* MRBaseLocation.m in Sources */,
 				52EBA4771B9C325A00DC0017 /* MRPublishSegue.m in Sources */,
 				52EBA4521B95874600DC0017 /* MRMessageArray.m in Sources */,
@@ -672,15 +746,22 @@
 				52EBA4361B9337A400DC0017 /* MRMainPublishMessage.m in Sources */,
 				52EBA4641B98007B00DC0017 /* MRMineTableViewController.m in Sources */,
 				529165EE1B8965D1007E764B /* MRMineViewController.m in Sources */,
+				529613FE1BAC01F900BA0822 /* MRResponseSignUpData.m in Sources */,
 				52C43DC21BA6959E00CFE36A /* MRLoginViewController.m in Sources */,
+				52C43DD11BAABBD100CFE36A /* MRRequestSignUp.m in Sources */,
+				529613FB1BAC019400BA0822 /* MRResponseSignUp.m in Sources */,
 				52EBA4391B93391C00DC0017 /* MRImageWithText.m in Sources */,
 				525C14201B849077007CFF6B /* AppDelegate.m in Sources */,
 				52D9F5CE1B8B288700A531C1 /* MainviewSetting.m in Sources */,
 				52EBA4881B9FDCCA00DC0017 /* PictureDetailSetting.m in Sources */,
 				52EBA45C1B97FA0E00DC0017 /* MineViewSetting.m in Sources */,
+				52C43DCD1BAABB8400CFE36A /* MRRequestLogin.m in Sources */,
 				52EBA44C1B956A3D00DC0017 /* UIColor+ColorWithHex.m in Sources */,
+				529613F81BABEECB00BA0822 /* BLMultipartForm.m in Sources */,
 				529165E01B895A18007E764B /* MRSquareViewController.m in Sources */,
+				529613F21BABE6A400BA0822 /* MRRequestModelSignUp.m in Sources */,
 				52EBA4851B9FD24200DC0017 /* MRPictureDetailTableViewController.m in Sources */,
+				529614011BAC400000BA0822 /* NetworkRequestSetting.m in Sources */,
 				525C141D1B849077007CFF6B /* main.m in Sources */,
 				52EBA4331B9333F300DC0017 /* MRMainTableViewController.m in Sources */,
 				52EBA4421B934F2900DC0017 /* MRMainMessageImageButton.m in Sources */,
@@ -692,6 +773,7 @@
 				52EBA48D1BA000D300DC0017 /* MRBaseUser.m in Sources */,
 				52EBA4451B93E6B000DC0017 /* MRMainMessageImageScrollView.m in Sources */,
 				52EBA4731B9AB22900DC0017 /* PublishViewSetting.m in Sources */,
+				52C43DC91BAAB07A00CFE36A /* MRRequestModelBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MoRan/MRPictureDetailTableViewController.m"
-            timestampString = "463468532.749459"
+            timestampString = "464190670.448678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "@implementation MRPictureDetailTableViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MoRan/MRPictureDetailTableViewController.m"
-            timestampString = "463469721.048806"
+            timestampString = "464190670.448678"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "@implementation MRPictureDetailTableViewController"
             landmarkType = "3">
          </BreakpointContent>

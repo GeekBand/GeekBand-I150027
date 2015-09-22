@@ -57,8 +57,11 @@
     navigationBarFrame.size.height = 64;
     self.navigationBarView.frame = navigationBarFrame;
     
-    UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
-    [mainWindow addSubview:self.navigationBarView];
+    UIWindow *topWindow = [[[UIApplication sharedApplication].windows sortedArrayUsingComparator:^NSComparisonResult(UIWindow *win1, UIWindow *win2) {
+        return win1.windowLevel - win2.windowLevel;
+    }] lastObject];
+    
+    [topWindow addSubview:self.navigationBarView];
     
     
     
@@ -82,6 +85,7 @@
     
     [super viewWillAppear:animated];
     
+    
 //    self.tabBarController.tabBar.hidden = YES;
 //
 //    self.navigationItem.backBarButtonItem = nil;
@@ -89,6 +93,14 @@
 //                                                         forBarMetrics:UIBarMetricsDefault];
     
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self.navigationBarView removeFromSuperview];
+    
 }
 
 - (void)didReceiveMemoryWarning {

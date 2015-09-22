@@ -17,3 +17,5 @@ Reminder:
 2. "Mine View" needs a button of setting
 
 3. "Main Square View" needs a map button
+
+4. Photo Library need Editable
