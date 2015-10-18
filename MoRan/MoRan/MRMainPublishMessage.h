@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong)MRBaseLocation * location;
 @property (nonatomic, copy)NSString * locationText;
-@property (nonatomic, strong)NSArray * imageArrayWithText;
+@property (nonatomic, strong)NSMutableArray * imageArrayWithText;
 
 //- (instancetype)initWithLoctionText:(NSString *)locationText ImageArray:(NSArray *)imageArray TextArray:(NSArray *)textArray;
 

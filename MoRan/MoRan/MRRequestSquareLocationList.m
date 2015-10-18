@@ -87,12 +87,30 @@
                             
                             publishMessage.imageArrayWithText = [NSMutableArray new];
                             
+                            
+                            //对每个图片发送评论请求
                             for (MRResponseSquareLocationListPicture * response in picArray) {
                                 
                                 [MRNetworkinigTool getWithUrl:commentURL parameters:[[MRRequestModelSquareLocationListComment alloc] initWithPictureId:response.picture_id] resultClass:[MRResponseSquareLocationListComment class] priority:NSQualityOfServiceUserInitiated success:^(MRResponseSquareLocationListComment * commentResponse) {
                                     
-                                    MRImageWithText * imageWithText = [MRImageWithText alloc] initWithPicture:[[MRPicture alloc] initWithURLofCompressedImage:nil NormalImage:response.pic_link] Text: PublishTime:<#(NSDate *)#> User:<#(MRUserInfo *)#> Location:<#(MRBaseLocation *)#>
+                                    //没有对评论进行处理，只取第一条
+                                    MRResponseSquareLocationListCommentData* commentData = [commentResponse.data objectAtIndex:0];
                                     
+                                    NSDateFormatter * format = [NSDateFormatter new];
+                                    format.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+                                    NSDate * date = [format dateFromString:commentData.created];
+                                    
+                                    MRBaseUser * user = [MRBaseUser new];
+                                    user.userId = commentData.user_id;
+                                    
+                                    MRImageWithText * imageWithText =
+                                    [[MRImageWithText alloc] initWithPicture:[[MRPicture alloc] initWithURLofCompressedImage:nil NormalImage:response.pic_link]
+                                                                        Text:commentData.comment
+                                                                 PublishTime:date
+                                                                        User:user
+                                                                    Location:publishMessage.location];
+                                    
+                                    [publishMessage.imageArrayWithText addObject:imageWithText];
                                     
                                 } failure:failure];
                                 

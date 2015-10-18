@@ -1,5 +1,5 @@
 //
-//  MRUserInfo.m
+//  MRBaseUser.m
 //  MoRan
 //
 //  Created by john on 15/9/9.
