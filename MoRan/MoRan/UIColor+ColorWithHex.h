@@ -15,4 +15,6 @@
 //用RGB十六进制产生颜色
 + (UIColor *)colorwithHex:(NSInteger)colorHex;
 
++ (UIColor *)colorwithHex:(NSInteger)colorHex Alpha:(CGFloat)alpha;
+
 @end

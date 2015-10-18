@@ -1,0 +1,48 @@
+//
+//  MoRan-PrefixHeader.pch
+//  MoRan
+//
+//  Created by john on 10/10/15.
+//  Copyright © 2015 geekband-i150027. All rights reserved.
+//
+
+
+#ifndef MRPrefixHeader_pch
+#define MRPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#pragma mark - Import Setting
+
+#ifdef __OBJC__
+
+#import <UIKit/UIKit.h>
+#import "UIColor+ColorWithHex.h"
+#import "UIFont+Bold.h"
+#import "CALayer+Border.h"
+#import "NSString+Check.h"
+
+#endif
+
+#pragma mark - Debug Log
+
+#ifdef DEBUG
+
+#define MRLog(...) NSLog(__VA_ARGS__)
+#else
+#define MRLog(...)
+
+#endif
+
+#pragma mark - System Version Judgement
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+
+
+#endif /* MoRan-PrefixHeader_pch */

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "MRRequestSquareLocationList.h"
+
+
 
 @interface MoRanTests : XCTestCase
 
@@ -27,6 +30,38 @@
 
 - (void)testExample {
     // This is an example of a functional test case.
+    
+//    typedef NS_ENUM(NSInteger, MRHTTPResquestManangementQueueType) {
+//        
+//        MRHTTPResquestManangementQueueTypeNormal         =        2,
+//        MRHTTPResquestManangementQueueTypePaused         =        1,
+//        MRHTTPResquestManangementQueueTypeComplete       =        0,
+//        last
+//    };
+    
+//    NSMutableArray * normalQueue = [NSMutableArray new];
+//    NSMutableArray * pausedQueue = [NSMutableArray new];
+//    NSMutableArray * completeQueue = [NSMutableArray new];
+//    
+//    [normalQueue addObject:@"he"];
+//    NSDictionary * queue = @{@(MRHTTPResquestManangementQueueTypeNormal):normalQueue, @(MRHTTPResquestManangementQueueTypePaused):pausedQueue, @(MRHTTPResquestManangementQueueTypeComplete):completeQueue};
+//    
+////    NSLog(@"%@", [queue objectForKey:@(MRHTTPResquestManangementQueueTypeNormal)]);
+//    
+//    [queue enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+////        NSLog(@"%@", key);
+////        NSLog(@"%@", [key class]);
+//        NSLog(@"%i", key );
+//    }];
+
+//    NSLog(@"%li", (long)last);
+//    MRRequestModelSquareLocationList * model = [[MRRequestModelSquareLocationList alloc] initWithLongtitude:0 Latitude:0 Distance:1000];
+//    model.user_id = @"27";
+//    model.token = @"e9a6e1a194d40bc9e98c14e92717c546d19c3991";
+//    
+//    [MRNetworkinigTool get:[MRRequestPrefix stringByAppendingString:@"node/list"] parameters:[model keyValues] priority:NSQualityOfServiceUserInitiated success:<#^(id responseObject)success#> failure:<#^(NSError *error)failure#>]
+    
+    
     XCTAssert(YES, @"Pass");
 }
 

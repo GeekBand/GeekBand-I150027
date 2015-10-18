@@ -19,12 +19,16 @@
 @protocol MRTabBarDelegate <NSObject>
 
 @required
-- (void)publishButtonClicked:(UIButton *)publishButton;
+- (void)publishButtonClicked:(UIButton *)button;
+
+-  (void)publishButtonLongPress:(UIButton *)button;
 
 @end
 
 
-@interface MRTabBar : UITabBar
+@interface MRTabBar : UITabBar < UIGestureRecognizerDelegate >
+
+@property (nonatomic, strong) UIButton * composeButton;
 
 @property(nonatomic, strong)id<MRTabBarDelegate> _delegate;
 

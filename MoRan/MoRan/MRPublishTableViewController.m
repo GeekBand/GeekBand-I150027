@@ -10,6 +10,8 @@
 #import "PublishViewSetting.h"
 #import "UIColor+ColorWithHex.h"
 #import "CALayer+Border.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "MRNetworkinigTool.h"
 
 @interface MRPublishTableViewController ()
 
@@ -26,42 +28,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.publishText.delegate = self;
+    self.publishTextView.delegate = self;
     
     self.view.backgroundColor = [UIColor colorwithHex:0xebecec];
     
-    //设置文本框的编辑事件
-    [self.publishText addTarget:self
-                  action:@selector(textFieldDidChanged:)
-        forControlEvents:UIControlEventEditingChanged];
     
-    
-    //设置取消键
-    //    [self.cancelButton setTitle:@"\U0001F53D" forState:UIControlStateNormal];
-    //    self.cancelButton.backgroundColor = [UIColor blackColor];
-    self.cancelButton.imageView.tintColor = [UIColor whiteColor];
-    [self.cancelButton setImage:[[UIImage imageNamed:@"backButton.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    
-    
-    //设置图片
-    if (self.publishImage == nil || !self.imageIsFromCamera) {
-        [self.publishImage setImage:[UIImage imageNamed:@"publishDefaultPicture"] forState:UIControlStateNormal];
-    } else {
-        
-        [self.publishImage setImage:self.takenImage forState:UIControlStateNormal];
-//        [self.publishImage setBackgroundImage:self.takenImage forState:UIControlStateNormal];
-        
-    }
-    
-    CGRect navigationBarFrame = self.navigationBarView.frame;
-    navigationBarFrame.size.width = self.tableView.frame.size.width;
-    navigationBarFrame.size.height = 64;
-    self.navigationBarView.frame = navigationBarFrame;
-    
-    UIWindow *topWindow = [[[UIApplication sharedApplication].windows sortedArrayUsingComparator:^NSComparisonResult(UIWindow *win1, UIWindow *win2) {
-        return win1.windowLevel - win2.windowLevel;
-    }] lastObject];
-    
-    [topWindow addSubview:self.navigationBarView];
     
     
     
@@ -91,7 +62,37 @@
 //    self.navigationItem.backBarButtonItem = nil;
 //    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
 //                                                         forBarMetrics:UIBarMetricsDefault];
+    //设置navigationBar
+    CGRect navigationBarFrame = self.navigationBarView.frame;
+    navigationBarFrame.size.width = self.tableView.frame.size.width;
+    navigationBarFrame.size.height = 64;
+    self.navigationBarView.frame = navigationBarFrame;
     
+    UIWindow *topWindow = [[[UIApplication sharedApplication].windows sortedArrayUsingComparator:^NSComparisonResult(UIWindow *win1, UIWindow *win2) {
+        return win1.windowLevel - win2.windowLevel;
+    }] lastObject];
+    
+    [topWindow addSubview:self.navigationBarView];
+    
+    //设置取消键
+    //    [self.cancelButton setTitle:@"\U0001F53D" forState:UIControlStateNormal];
+    //    self.cancelButton.backgroundColor = [UIColor blackColor];
+    self.cancelButton.imageView.tintColor = [UIColor whiteColor];
+    [self.cancelButton setImage:[[UIImage imageNamed:@"backButton.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    
+    //设置图片
+    if (self.publishImage == nil) {
+        
+        [self.publishImage setTitle:@"您还没有选择图片" forState:UIControlStateNormal];
+        
+    } else {
+        
+        [self.publishImage setBackgroundImage:self.takenImage forState:UIControlStateNormal];
+        //        [self.publishImage setBackgroundImage:self.takenImage forState:UIControlStateNormal];
+        
+    }
+    
+    [self textViewDidChange:self.publishTextView];
 
 }
 
@@ -108,14 +109,45 @@
 }
 
 #pragma mark - Custom Class Method
+
+- (void)cleanComponents {
+    
+    [self.publishImage setBackgroundImage:nil forState:UIControlStateNormal];
+    
+    [self.publishTextView setText:nil];
+    
+    [self.locationText setText:nil];
+}
+- (IBAction)publishButtonClicked:(id)sender {
+    
+    if ([self.publishTextView.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding] > 60) {
+        
+        [MRNetworkinigTool showReminderWithString:@"评论至多60个字"];
+        
+        return;
+    }
+    
+    [self cleanComponents];
+}
+
 - (IBAction)publishImageClicked:(id)sender {
 #warning Potentially imcomplete method implementation.
     
+    if (self.takenImage == nil) {
+        
+        [self repictureButtonClicked:sender];
+    }
 }
 
 - (IBAction)repictureButtonClicked:(id)sender {
 #warning Potentially imcomplete method implementation. 
     
+    UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                              delegate:self
+                                                     cancelButtonTitle:@"取消"
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:@"拍照", @"从手机相册选择", nil];
+    [actionSheet showInView:self.view];
 }
 
 - (IBAction)cancelButtonClicked:(id)sender {
@@ -126,21 +158,85 @@
     
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     
-    
+    [self cleanComponents];
     
 }
 
 - (void)blankButtonClicked:(UIButton *)button {
 
-    [self.publishText resignFirstResponder];
+    [self.publishTextView resignFirstResponder];
     
     [self.blankButton removeFromSuperview];
     
 }
 
-- (void)textFieldDidChanged:(id)sender {
+
+//- (void)textFieldDidChanged:(id)sender {
+//
+//    self.publishTextNum.text = [NSString stringWithFormat:@"%lu/60", self.publishText.text.length];
+//}
+
+#pragma mark - ActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *imagePicker = [UIImagePickerController new];
+    if (buttonIndex == 0) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            
+            self.imageIsFromCamera = true;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        } else {
+            
+            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:@"无法获取相机" preferredStyle:UIAlertControllerStyleAlert] ;
+            UIAlertAction * action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil];
+            
+            [alertController addAction:action];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    } else if (buttonIndex == 1) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            
+            self.imageIsFromCamera = false;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    }
+}
+
+#pragma mark - ImagePickerControllerDelegate Methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    self.publishTextNum.text = [NSString stringWithFormat:@"%i/60", self.publishText.text.length];
+
+    NSString * type = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    if([type isEqualToString:(NSString *)kUTTypeImage]) {
+        
+        if (self.imageIsFromCamera) {
+            
+            UIImage * edited = [info objectForKey:UIImagePickerControllerEditedImage];
+            
+            self.takenImage = edited;
+            
+            [self.publishImage setBackgroundImage:edited forState:UIControlStateNormal];
+            
+            [self.publishImage setTitle:nil forState:UIControlStateNormal];
+            
+            //保存图片
+            if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)UIImageWriteToSavedPhotosAlbum(edited, self, nil, nil);
+        }
+    }
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
+    
+    
 }
 
 #pragma mark - Table view data source
@@ -204,26 +300,27 @@
 
 //
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
+//
 ////    static NSString * reuseIdentifier = @"PublishCellReuseIdentifer";
 ////    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-//    
+//
 //    UITableViewCell * cell = [[UITableViewCell alloc] init];
-//    
+//
 //    cell.contentView.frame = CGRectMake(0, 0, tableView.frame.size.width, 0);
 //
 ////    if (cell == nil) {
 ////        cell = [cell initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
 ////        cell.contentView.frame = CGRectMake(0, 0, tableView.frame.size.width, 0);
 ////    }
-//    
+//
 //    return cell;
 //}
 
 
 #pragma mark - UITextFieldDelegate Methods
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
     //设置空白图片
     self.blankButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     [self.blankButton addTarget:self action:@selector(blankButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -232,9 +329,40 @@
     [self.tableView bringSubviewToFront:self.blankButton];
     
     [self.tableView bringSubviewToFront:self.publishText];
-    
-                              
+    [self.tableView bringSubviewToFront:self.publishTextView];
 }
+
+
+- (void)textViewDidChange:(UITextView *)textView {
+    
+    if ([textView hasText]) {
+        
+        [self.publishText setPlaceholder:nil];
+    } else {
+        
+        [self.publishText setPlaceholder:@"你想说的话..."];
+    }
+    
+    NSInteger l = [textView.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    
+    if (l > 60) {
+        
+        [textView setTextColor:[UIColor redColor]];
+    } else {
+        
+        [textView setTextColor:[UIColor colorWithRed:150.0 / 255 green:150.0 / 255 blue:152.0 / 255 alpha:1]];
+    }
+    
+    self.publishTextNum.text = [NSString stringWithFormat:@"%lu/60", [textView.text lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    
+    return NO;
+}
+
 
 
 

@@ -14,4 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *loginButton;
 @property (strong, nonatomic) IBOutlet UIButton *signUpButton;
 
+@property (strong, nonatomic) IBOutlet UIView *waitView;
+
 @end

@@ -14,4 +14,9 @@
     return [UIColor colorWithRed:(colorHex / 0x10000) / 255.0 green:(colorHex / 0x100 % 0x100) / 255.0 blue:(colorHex % 0x100) / 255.0 alpha:1];
 }
 
++ (UIColor *)colorwithHex:(NSInteger)colorHex Alpha:(CGFloat)alpha {
+    
+    return [UIColor colorWithRed:(colorHex / 0x10000) / 255.0 green:(colorHex / 0x100 % 0x100) / 255.0 blue:(colorHex % 0x100) / 255.0 alpha:alpha];
+}
+
 @end

@@ -105,6 +105,14 @@
                         action:@selector(publishButtonClicked:)
               forControlEvents:UIControlEventTouchUpInside];
     
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(publishButtonLongPress:)];
+    lpgr.minimumPressDuration = 2.0; //seconds
+    lpgr.delegate = self;
+    [publishButton addGestureRecognizer:lpgr];
+    
+    self.composeButton = publishButton;
+    
     [self addSubview:publishButton];
 }
 
@@ -124,6 +132,17 @@
     if (self._delegate && [(NSObject *)self._delegate respondsToSelector:@selector(publishButtonClicked:)]) {
         [self._delegate publishButtonClicked:button];
     }
+}
+
+- (void)publishButtonLongPress:(UILongPressGestureRecognizer *)gesture {
+    
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        
+        if (self._delegate && [(NSObject *)self._delegate respondsToSelector:@selector(publishButtonLongPress:)]) {
+            [self._delegate publishButtonLongPress:self.composeButton];
+        }
+    }
+    
 }
 
 

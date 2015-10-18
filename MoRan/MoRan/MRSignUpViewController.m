@@ -13,13 +13,9 @@
 #import "MRRequestSignUp.h"
 #import <AFNetworking.h>
 #import "MRResponseSignUpData.h"
-
-#define SIGNUP_ERROR_FORMAT_OF_EMAIL @"邮箱格式不正确"
-#define SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_NONUMBER @"密码必须包含数字"
-#define SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_NOCHAR @"密码必须包含字母"
-#define SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_LENGTH @"密码长度必须至少8位"
-#define SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_ILLEGEL_CHAR @"密码不得包含初字母和数字以外其他的字符"
-#define SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_INCONSISTENCY @"两次输入的密码不同"
+#import "MRSignUpNameViewController.h"
+#import "NSString+Check.h"
+#import "MRNetworkinigTool.h"
 
 
 @interface MRSignUpViewController ()
@@ -75,11 +71,22 @@
     waitViewFrame.size.height = [[UIScreen mainScreen] bounds].size.height;
     self.waitView.frame = waitViewFrame;
     
-    self.waitImageView.animationImages = [NSArray arrayWithObjects:
-                                         [UIImage imageNamed:@"littleYellow.gif"], nil];
-    self.waitImageView.animationDuration = 1.0f;
+    NSMutableArray * imageArray = [[NSMutableArray alloc] init];
+    for (int i = 1; i < 15; i++) {
+        [imageArray addObject:[UIImage imageNamed:[NSString stringWithFormat:@"littleYellow%i.jpg", i]]];
+    }
+    
+    self.waitImageView.animationImages = imageArray;
+    self.waitImageView.animationDuration = 2.0f;
     self.waitImageView.animationRepeatCount = 0;
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self cleanTextField];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -101,9 +108,10 @@
 
 
 - (IBAction)signUpButtonClicked:(id)sender {
+#warning Potentially incomplete method implementation.
     
     NSString * reminder;
-    if ((reminder = [self checkTextField])) {
+    if (/*(reminder = [self checkTextField])*/false) {
         
         //显示错误提示
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:reminder delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
@@ -113,11 +121,20 @@
     } else {
         
         
-        
-        [self.view addSubview:self.waitView];
-        [self.view bringSubviewToFront:self.waitView];
+        //加载等待页面
+        [[[UIApplication sharedApplication] keyWindow] addSubview:self.waitView];
+//        [self.view bringSubviewToFront:self.waitView];
         [self.waitImageView startAnimating];
         
+        //设置定时器
+        dispatch_queue_t currentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, currentQueue, ^{
+            
+            [self waitTimeOver];
+        });
+
         
         MRRequestModelSignUp * parameter = [[MRRequestModelSignUp alloc] initWithUserName:@"HelloWorld" PassWord:self.passwordTextField.text Email:self.emailTextField.text];
         [MRRequestSignUp postWithParameters:parameter Success:^(MRResponseSignUp * response) {
@@ -127,82 +144,101 @@
                 MRResponseSignUpData * data = response.data;
                 
                 
+                
                 NSLog(@"register success\n");
+                
+                [self cleanTextField];
             }
             
-//            [waitView removeFromSuperview];
+            [self removeWaitView];
+            
+        
             
             
         } Failure:^(NSError * error) {
             
             //请求失败
-            NSLog(@"%@\n", error);
+            [self removeWaitView];
             
-            [self handleError:error];
             
-//            [waitView removeFromSuperview];
+            [MRNetworkinigTool handleError:error Handler:^(NSDictionary * serializedData) {
+                
+                if(serializedData == nil)return;
+                
+                if ((int)[serializedData objectForKey:@"status"] == 1 ) {
+                    
+                    //这个问题可能很严重，一般不可能发生，需要把刚才注册的号在服务端删掉
+                }
+                
+                if ([serializedData[@"message"] isEqualToString:@"Email exists"]) {
+                    
+                    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:SIGNUP_ERROR_FORMAT_OF_EMAIL_EXISTS delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                    
+                    [alert show];
+                } else {
+                    
+                    //可能是未知错误，需要发给服务端处理
+                }
+            }];
+
+            
         }];
         
         
     }
 }
 
+
 - (void)dismissKeyboard {
     
     [self.activeField resignFirstResponder];
 }
 
-- (void)handleError:(NSError *)error {
-#warning Potentially incomplete method implementation.
-    
-    NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
-    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
-}
+//- (void)handleError:(NSError *)error {
+//#warning Potentially incomplete method implementation.
+//    
+//    NSData *errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+//    NSDictionary *serializedData = [NSJSONSerialization JSONObjectWithData: errorData options:kNilOptions error:nil];
+//    
+//    NSLog(@"%@",serializedData[@"message"]);
+//    
+//    if ((int)[serializedData objectForKey:@"status"] == 1 ) {
+//        
+//        //这个问题可能很严重，一般不可能发生，需要把刚才注册的号在服务端删掉
+//    }
+//    
+//    if ([serializedData[@"message"] isEqualToString:@"Email exists"]) {
+//        
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:SIGNUP_ERROR_FORMAT_OF_EMAIL_EXISTS delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        
+//        [alert show];
+//    } else {
+//        
+//        //可能是未知错误，需要发给服务端处理
+//    }
+//    
+//}
 
 - (NSString *)checkTextField {
     
+    NSString * error = nil;
+    NSString * password = self.passwordTextField.text;
+    NSString * email = self.emailTextField.text;
+    NSString * rePassword = self.reenterPasswordTextField.text;
     
     //检查邮箱
-    NSString * email = self.emailTextField.text;
-    NSRange r = [email rangeOfString:@"@"];
-    if (r.location == NSNotFound) {
+    error = [email isValidAsEmail];
+    if (error) {
         
-        return SIGNUP_ERROR_FORMAT_OF_EMAIL;
+        return error;
     }
     
     
     //检查密码
-    NSCharacterSet * cSet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"];
-    NSCharacterSet * nSet = [NSCharacterSet decimalDigitCharacterSet];
-    
-    NSString * password = self.passwordTextField.text;
-    NSString * rePassword = self.reenterPasswordTextField.text;
-    
-    if ([password length] < 8) {
-        return SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_LENGTH;
-    }
-    
-    BOOL hasNumber = false;
-    BOOL hasLetter = false;
-    for (int i = 0; i < [password length]; i++) {
+    error = [password isValidAsPassword];
+    if (error) {
         
-        unichar c = [password characterAtIndex:i];
-        
-        if ([cSet characterIsMember:c] == false) {
-            return SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_ILLEGEL_CHAR;
-        } else if ([nSet characterIsMember:c]) {
-            hasNumber = true;
-        } else {
-            hasLetter = true;
-        }
-    }
-    
-    if (!hasNumber) {
-        return SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_NONUMBER;
-    }
-    
-    if (!hasLetter) {
-        return SIGNUP_ERROR_FORMAT_OF_PASSWORD_AS_NOCHAR;
+        return error;
     }
     
     if ([password isEqualToString:rePassword] == false) {
@@ -210,6 +246,30 @@
     }
     
     return nil;
+}
+
+- (void)waitTimeOver {
+    self.timeUp = true;
+}
+
+- (void)removeWaitView {
+    
+    while (!self.timeUp) {
+        [NSThread sleepForTimeInterval:1.0f];
+    }
+    
+    [self.waitView removeFromSuperview];
+    
+    self.timeUp = false;
+}
+
+- (void)cleanTextField {
+    
+    self.emailTextField.text = nil;
+    
+    self.passwordTextField.text = nil;
+    
+    self.reenterPasswordTextField.text = nil;
 }
 
 
@@ -295,7 +355,17 @@
     }
 }
 
+#pragma mark - Segue Methods
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"SignUpToName"]) {
+        
+        MRSignUpNameViewController * des = segue.destinationViewController;
+        des.email = self.emailTextField.text;
+        des.password = self.passwordTextField.text;
+    }
+}
 
 
 @end

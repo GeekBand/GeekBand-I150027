@@ -10,8 +10,9 @@
 
 @interface MRRequestModelBase : NSObject
 
-@property (nonatomic, copy) NSString * token;
+@property (nonatomic, copy, readonly) NSString * token;
 
-@property (nonatomic, copy) NSString * user_id;
+@property (nonatomic, copy, readonly) NSString * user_id;
+
 
 @end

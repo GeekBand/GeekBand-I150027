@@ -8,6 +8,7 @@
 
 #import "MRMainMessageImageButton.h"
 #import "MRImageWithText.h"
+#import "MRPicture.h"
 
 
 @implementation MRMainMessageImageButton
@@ -17,8 +18,8 @@
 - (instancetype)initWithArray:(NSArray *)array IndexPath:(NSIndexPath *)indexPath ArrayNum:(NSInteger)arrayNum {
     
     if (self = [super init]) {
-        [self setImage:[UIImage imageWithContentsOfFile:((MRImageWithText *)[array objectAtIndex:arrayNum]).imagePath] forState:UIControlStateNormal];
-        [self setImage:[UIImage imageWithContentsOfFile:((MRImageWithText *)[array objectAtIndex:arrayNum]).imagePath] forState:UIControlStateHighlighted];
+        
+        [((MRImageWithText *)[array objectAtIndex:arrayNum]).picture setImageForSender:self Compressed:YES];
         self.cellRow = indexPath.row;
         self.cellSection = indexPath.section;
         self.arrayNum = arrayNum;

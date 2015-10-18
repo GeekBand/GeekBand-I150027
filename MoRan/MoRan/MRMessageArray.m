@@ -7,6 +7,7 @@
 //
 
 #import "MRMessageArray.h"
+#import "MRBaseLocation.h"
 
 @implementation MRMessageArray
 
@@ -15,30 +16,35 @@
         
         self.messageArray = [[NSMutableArray alloc] init];
         
-        for (int i = 1; i <= 5; i++) {
-            
-            MRMainPublishMessage *message = [[MRMainPublishMessage alloc] init];
-            message.locationText = [NSString stringWithFormat:@"第%i行", i];
-            
-            NSMutableArray *array = [[NSMutableArray alloc] init];
-            for (int j = 0; j < 5; j++) {
-                
-                MRImageWithText *imageWithText =[[MRImageWithText alloc] init];
-                if (j % 2) imageWithText.text = @"马路对面新开了一家火锅店，看起来还不错的样子。啦啦啦啦是否所发生的";
-                else imageWithText.text = @"就看看";
-                imageWithText.imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%i", i] ofType:@"png"];
-                [array addObject:imageWithText];
-            }
-            
-            message.imageArrayWithText = [[NSArray alloc] initWithArray:array];
-            
-            [self.messageArray addObject:message];
-            
-            
-        }
+//        for (int i = 1; i <= 5; i++) {
+//            
+//            MRMainPublishMessage *message = [[MRMainPublishMessage alloc] init];
+//            message.locationText = [NSString stringWithFormat:@"第%i行", i];
+//            
+//            NSMutableArray *array = [[NSMutableArray alloc] init];
+//            for (int j = 0; j < 5; j++) {
+//                
+//                MRImageWithText *imageWithText =[[MRImageWithText alloc] init];
+//                if (j % 2) imageWithText.text = @"马路对面新开了一家火锅店，看起来还不错的样子。啦啦啦啦是否所发生的";
+//                else imageWithText.text = @"就看看";
+//                imageWithText.imagePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%i", i % 2 + 1] ofType:@"png"];
+//                [array addObject:imageWithText];
+//            }
+//            
+//            message.imageArrayWithText = [[NSArray alloc] initWithArray:array];
+//            
+//            [self.messageArray addObject:message];
+//            
+//            
+//        }
     }
     
     return self;
+}
+
+- (void)refreshWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance {
+    
+    
 }
 
 - (NSUInteger)count {

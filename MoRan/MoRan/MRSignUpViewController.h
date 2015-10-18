@@ -20,5 +20,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *waitImageView;
 
 @property (strong ,nonatomic) UITextField * activeField;
+@property (assign, nonatomic) BOOL timeUp;
 
 @end

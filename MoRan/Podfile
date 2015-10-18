@@ -5,3 +5,4 @@ pod 'AMapSearch' #搜索服务SDK
 pod 'MJExtension'
 pod 'AFNetworking', '~> 2.5'
 pod 'SDWebImage', '~> 3.7'
+pod 'MJRefresh'

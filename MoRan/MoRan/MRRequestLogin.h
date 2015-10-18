@@ -10,4 +10,6 @@
 
 @interface MRRequestLogin : NSObject
 
++ (void)loginWithEmail:(NSString *)email Password:(NSString *)password Success:(void (^)())success Failure:(void (^)(NSError *))failure;
+
 @end

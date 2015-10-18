@@ -7,7 +7,12 @@
 //
 
 #import "MRAccountInfo.h"
+#import <MJExtension.h>
+
 
 @implementation MRAccountInfo
+
+MJCodingImplementation
+
 
 @end

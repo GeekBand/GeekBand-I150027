@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MRAccountInfo.h"
+
+@class MRAccountInfo;
+@class MRHistoryAccountInfo;
+
 
 @interface MRAccountInfoTool : NSObject
 
@@ -16,5 +19,14 @@
 
 /** 存储accountInfo到文件 */
 + (void) saveAccountInfo:(MRAccountInfo *) accountInfo;
+
+//Log out
++ (void)logout;
+
+//读取历史登录信息
++ (MRHistoryAccountInfo *)getHistoryAccountInfo;
+
+//存储历史登录信息
++ (void)saveHistoryAccountInfo:(MRHistoryAccountInfo *)account;
 
 @end

@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MRPublishTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate >
+@interface MRPublishTableViewController : UITableViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate , UIActionSheetDelegate, UITextViewDelegate>
+@property (strong, nonatomic) IBOutlet UITextView *publishTextView;
 
 @property (strong, nonatomic) IBOutlet UIView *navigationBarView;
 
@@ -26,6 +27,5 @@
 
 @property(nonatomic, strong)UIButton * blankButton;
 
-- (void)textFieldDidChanged:(id)sender;
 
 @end

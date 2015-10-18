@@ -111,8 +111,7 @@
 
         return nil;
     }
-#warning This is changed by john.
-    self.responseSerializer.acceptableContentTypes = [self.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+
 
     return [self HTTPRequestOperationWithRequest:request success:success failure:failure];
 }

@@ -19,3 +19,5 @@ Reminder:
 3. "Main Square View" needs a map button
 
 4. Photo Library need Editable
+
+5. Remember to set text empty after loginning or registering

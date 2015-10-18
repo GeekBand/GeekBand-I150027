@@ -17,7 +17,8 @@
     
     NSString * url = [MRRequestPrefix stringByAppendingString:@"user/register"];
     
-    [MRNetworkinigTool postWithUrl:url parameters:parameters resultClass:[MRResponseSignUp class] success:success failure:failure];
+    [MRNetworkinigTool postWithUrl:url parameters:parameters resultClass:[MRResponseSignUp class] priority:NSQualityOfServiceUserInitiated success:success failure:failure];
+    
 }
 
 @end

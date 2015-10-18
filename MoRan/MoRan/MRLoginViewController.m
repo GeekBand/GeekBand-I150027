@@ -7,6 +7,9 @@
 //
 
 #import "MRLoginViewController.h"
+#import "MRRequestLogin.h"
+#import "NSString+Check.h"
+#import "MRNetworkinigTool.h"
 
 #define kOFFSET_FOR_KEYBOARD 30.0
 
@@ -25,8 +28,20 @@
     
     [self.loginButton.layer setCornerRadius:3];
     
+    [self.waitView setContentMode:UIViewContentModeCenter];
+    [self.waitView setFrame:[UIScreen mainScreen].bounds];
+    [self.view addSubview:self.waitView];
+    self.waitView.hidden = YES;
+
     
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self cleanTextField];
 }
 
 //- (void)viewWillAppear:(BOOL)animated
@@ -77,6 +92,74 @@
 */
 
 #pragma mark - Custom Class Methods
+
+- (IBAction)loginButtonClicked:(id)sender {
+#warning Potentially incomplete method implementation.
+    
+    __block BOOL isError = false;
+    __block NSString * errorMessage;
+    
+    NSString * email = self.emailTextField.text;
+    NSString * password = self.passwordTextField.text;
+    
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_group_async(group, dispatch_get_main_queue(), ^{
+        
+        self.waitView.hidden = NO;
+//        [self.view setNeedsDisplay];
+        
+    });
+    dispatch_group_async(group, globalQueue, ^{
+        
+        if ([email isValidAsEmail] && [password isValidAsPassword]) {
+            
+            isError =true;
+            errorMessage = @"邮箱或者密码错误";
+            
+        } else {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                //登录成功的处理都在login函数中
+                [MRRequestLogin loginWithEmail:email Password:password Success:nil Failure:^(NSError * error) {
+                    
+                    if (error) {
+                        
+                        isError = true;
+                        
+                        [MRNetworkinigTool handleError:error Handler:nil];
+                    }
+                }];
+            });
+            
+        }
+    });
+
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        
+        self.waitView.hidden = YES;
+        
+        if (isError) {
+            
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            
+            [alert show];
+        }
+        
+    });
+
+    
+    
+    
+}
+
+- (IBAction)cancelButtonClicked:(id)sender {
+#warning Potentially incomplete method implementation.
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
 
 //-(void)keyboardWillShow {
 //    // Animate the current view out of the way
@@ -130,6 +213,13 @@
     [self.emailTextField resignFirstResponder];
     
     [self.passwordTextField resignFirstResponder];
+}
+
+- (void)cleanTextField {
+    
+    self.emailTextField.text = nil;
+    
+    self.passwordTextField.text = nil;
 }
 
 #pragma mark - TextFieldDelegate Methods

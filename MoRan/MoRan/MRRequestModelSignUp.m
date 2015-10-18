@@ -7,6 +7,7 @@
 //
 
 #import "MRRequestModelSignUp.h"
+#import "NetworkRequestSetting.h"
 
 @implementation MRRequestModelSignUp
 
@@ -15,9 +16,11 @@
     if (self = [super init]) {
         
         self.username = username;
-        self.password = password;
-        self.email = email;
-        self.gbid = @"GeekBand-I150027";
+//        self.password = password;
+//        self.email = email;
+        self.gbid = MRGBID;
+        self.email = @"helloworld@moran.com";
+        self.password = @"a1234567";
     }
     
     return self;

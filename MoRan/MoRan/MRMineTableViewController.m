@@ -7,6 +7,21 @@
 //
 
 #import "MRMineTableViewController.h"
+#import "NetworkRequestSetting.h"
+#import "MRRequestMineSetImage.h"
+#import "MRNetworkinigTool.h"
+#import "MRAccountInfoTool.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "MRPublishTableViewController.h"
+
+@interface MRMineTableViewController ()
+
+@property (nonatomic, strong) UIImagePickerController * imagePicker;
+
+@property(nonatomic, strong)UIImage * takenImage;
+@property(nonatomic, assign)BOOL imageIsFromCamera;
+
+@end
 
 @implementation MRMineTableViewController
 
@@ -27,6 +42,8 @@
     self.imageArray = [[NSArray alloc] initWithObjects:[UIImage imageNamed:@"nickname"], [UIImage imageNamed:@"headimage"], [UIImage imageNamed:@"signout"], [UIImage imageNamed:@"rate"], [UIImage imageNamed:@"follow"], [UIImage imageNamed:@"homepage"], nil];
     
     self.textArray = [[NSArray alloc] initWithObjects:@"更改昵称", @"设置头像", @"注销登录", @"评价我们", @"关注我们", @"官方网站", nil];
+    
+    self.imagePicker = [[UIImagePickerController alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -95,6 +112,56 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+#warning Potentially incomplete methods implementation.
+    
+    if (indexPath.section == 0) {
+        
+        if (isLogin) {
+            
+            if (indexPath.row == 0) {//Change my name
+                
+                [self performSegueWithIdentifier:@"ChangeName" sender:self];
+                
+            } else if (indexPath.row == 1) {//Set my Image
+                
+                UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"取消"
+                                                            destructiveButtonTitle:nil
+                                                                 otherButtonTitles:@"拍照", @"从手机相册选择", nil];
+                [actionSheet showInView:self.view];
+            } else {
+                
+                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:@"您确定要退出？" preferredStyle:UIAlertControllerStyleAlert] ;
+                
+                UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:cancelAction];
+                
+                UIAlertAction * confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [self.userImage setImage:nil forState:UIControlStateNormal];
+                    self.userName.text = @"您还没有登录";
+                    self.userId.text = nil;
+                    
+                    [MRAccountInfoTool logout];
+                    
+                }];
+                [alertController addAction:confirmAction];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+            }
+            
+        } else {
+            
+        }
+        
+    } else {
+        
+    }
+}
+
 
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 //    
@@ -145,9 +212,140 @@
 
 - (void)publishButtonClicked:(UIButton *)publishButton{
     
-    [self performSegueWithIdentifier:@"Publish" sender:publishButton];
+    //设置照相
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
+        [imagePicker setDelegate:self];
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypeCamera];
+        
+        self.imageIsFromCamera = true;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        
+        
+        self.imageIsFromCamera = false;
+        
+        [self goToPublishView];
+    }
 }
 
+- (void)publishButtonLongPress:(UIButton *)button {
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
+        [imagePicker setDelegate:self];
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        imagePicker.allowsEditing = YES;
+        
+        self.imageIsFromCamera = false;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        
+        
+        self.imageIsFromCamera = false;
+        
+        [self goToPublishView];
+    }
+}
+
+- (void)goToPublishView {
+    
+#warning Potentially incomplete method implementation.
+    [self performSegueWithIdentifier:@"Publish" sender:self];
+    
+    
+}
+
+#pragma mark - ActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController *imagePicker = self.imagePicker;
+    if (buttonIndex == 0) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        } else {
+            
+            UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:@"无法获取相机" preferredStyle:UIAlertControllerStyleAlert] ;
+            UIAlertAction * action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil];
+            
+            [alertController addAction:action];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    } else if (buttonIndex == 1) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+    }
+}
+
+#pragma mark - ImagePicker Methods
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    
+    if (picker == self.imagePicker) {
+        
+        UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
+        
+        [MRRequestMineSetImage setImageWithImage:image Success:^(id anything) {
+            
+            [self.userImage setImage:image forState:UIControlStateNormal];
+            
+        } Failure:^(NSError * error) {
+            
+            [MRNetworkinigTool showReminderWithString:@"上传图片失败"];
+        }];
+    } else {
+        
+        NSString * type = [info objectForKey:UIImagePickerControllerMediaType];
+        
+        if([type isEqualToString:(NSString *)kUTTypeImage]) {
+        
+            if (self.imageIsFromCamera) {
+                
+                
+                UIImage * original = [info objectForKey:UIImagePickerControllerOriginalImage];
+                
+                self.takenImage = original;
+                //保存图片
+                if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)UIImageWriteToSavedPhotosAlbum(original, self, nil, nil);
+            } else {
+                
+                UIImage * edited = [info objectForKey:UIImagePickerControllerEditedImage];
+                
+                self.takenImage = edited;
+            }
+        }
+        [self dismissViewControllerAnimated:NO completion:^(void){
+         
+            [self goToPublishView];
+        }];
+    }
+    
+}
+
+#pragma mark - Segue Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"Publish"]) {
+        MRPublishTableViewController * vc = segue.destinationViewController;
+        
+        vc.takenImage = self.takenImage;
+        vc.imageIsFromCamera = self.imageIsFromCamera;
+    }
+}
 
 
 @end

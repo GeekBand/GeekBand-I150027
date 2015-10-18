@@ -11,6 +11,16 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MRPublishTableViewController.h"
 #import "MRPictureDetailTableViewController.h"
+#import "MRNetworkinigTool.h"
+#import <MJRefresh.h>
+#import "MoRan-Swift.h"
+
+@interface MRMainTableViewController ()
+
+@property(nonatomic, strong)UIImage * takenImage;
+@property(nonatomic, assign)BOOL imageIsFromCamera;
+
+@end
 
 @implementation MRMainTableViewController
 
@@ -22,9 +32,34 @@
     
     self.messageArray = [[MRMessageArray alloc] init];
     
+    [self initRefresh];
+    
+    //定位管理
+    self.locationManager = [CLLocationManager new];
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0") && [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        
+        [self.locationManager requestWhenInUseAuthorization];
+    } else {
+        
+        [self.locationManager startUpdatingLocation];
+    }
+    
+    
     self.tableView.backgroundColor = [UIColor colorwithHex:0xebecec];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.rightBarButton setTitle:@"杭州" forState:UIControlStateNormal];
+    [self.rightBarButton setTitle:@"haha" forState:UIControlStateSelected];
+    [self.rightBarButton addTarget:self action:@selector(chooseCityButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.rightBarButton setFrame:CGRectMake(0, 0, 48, 24)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBarButton];
+    
     
 }
 
@@ -41,9 +76,47 @@
     
 }
 
+- (void)initRefresh {
+    
+    __weak typeof(self) weakSelf = self;
+    __weak UITableView *tableView = self.tableView;
+    
+    tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+            //刷新请求
+            
+            //加载数据
+            [tableView reloadData];
+            [tableView.header endRefreshing];
+        });
+    }];
+    tableView.header.automaticallyChangeAlpha = YES;
+    
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            
+            //刷新请求
+            
+            //加载数据
+            [tableView reloadData];
+            [tableView.footer endRefreshing];
+        });
+    }];
+    footer.hidden = YES;
+    tableView.footer = footer;
+}
+
 #pragma mark - Custom Event Methods
 
 
+- (void)chooseCityButtonClicked:(id)sender {
+    
+
+    CFCityPickerVC * cityPicker = [CFCityPickerVC new];
+    [self.navigationController presentViewController:cityPicker animated:YES completion:nil];
+}
 
 
 #pragma mark - UITableViewDelegate and UITableViewDataSourceDelegate Methods
@@ -186,6 +259,27 @@
    
 }
 
+- (void)publishButtonLongPress:(UIButton *)button {
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        UIImagePickerController * imagePicker = [[UIImagePickerController alloc] init];
+        [imagePicker setDelegate:self];
+        [imagePicker setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        imagePicker.allowsEditing = YES;
+        
+        self.imageIsFromCamera = false;
+        
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    } else {
+        
+        
+        self.imageIsFromCamera = false;
+        
+        [self goToPublishView];
+    }
+}
+
 - (void)goToPublishView {
 
 #warning Potentially incomplete method implementation.
@@ -205,13 +299,22 @@
     NSString * type = [info objectForKey:UIImagePickerControllerMediaType];
     
     if([type isEqualToString:(NSString *)kUTTypeImage]) {
-        UIImage * original = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        self.takenImage = original;
-        //保存图片
-        if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)UIImageWriteToSavedPhotosAlbum(original, self, nil, nil);
+        if (self.imageIsFromCamera) {
+            
+            
+            UIImage * original = [info objectForKey:UIImagePickerControllerOriginalImage];
+            
+            self.takenImage = original;
+            //保存图片
+            if(picker.sourceType == UIImagePickerControllerSourceTypeCamera)UIImageWriteToSavedPhotosAlbum(original, self, nil, nil);
+        } else {
+            
+            UIImage * edited = [info objectForKey:UIImagePickerControllerEditedImage];
+            
+            self.takenImage = edited;
+        }
     }
-    
     [self dismissViewControllerAnimated:NO completion:^(void){
         
         [self goToPublishView];
@@ -223,6 +326,58 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
     [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark - CLLocationManagerDelegate Methods
+
+- (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined: {
+            MRLog(@"User still thinking..");
+        } break;
+        case kCLAuthorizationStatusDenied: {
+            
+            MRLog(@"User hates you");
+            
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                
+                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"定位服务未开启" message:@"请到系统设置中开启定位服务" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"暂不" style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:cancel];
+                
+                UIAlertAction * setting = [UIAlertAction actionWithTitle:@"去设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                }];
+                [alertController addAction:setting];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+            } else {
+                
+                UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"定位服务未开启" message:@"请到设置->隐私->定位中开启" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:cancel];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+                
+            }
+        } break;
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusAuthorizedAlways: {
+            [_locationManager startUpdatingLocation]; //Will update location immediately
+        } break;
+        default:
+            break;
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations lastObject];
+    NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
 }
 
 #pragma mark - Segue Methods

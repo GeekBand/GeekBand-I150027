@@ -13,7 +13,7 @@
 #import "CALayer+Border.h"
 #import "MRTabBar.h"
 
-@interface MRMineTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, MRTabBarDelegate>
+@interface MRMineTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, MRTabBarDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 
 @property (strong, nonatomic) IBOutlet UIButton *userImage;

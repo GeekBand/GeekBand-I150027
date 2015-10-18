@@ -8,16 +8,18 @@
 
 #import "MRBaseUser.h"
 
+
 @interface MRAccountInfo : MRBaseUser
 
 /** 访问令牌 */
-@property(nonatomic, copy) NSString *access_token;
+@property (nonatomic, copy) NSString * access_token;
 
 /** access_token的有效期，单位：秒 */
-@property(nonatomic, copy) NSString *expires_in;
+@property (nonatomic, strong) NSDate * expires_in;
 
 /** 过期时间，自己计算存储 */
-@property(nonatomic, strong) NSDate *expires_time;
+@property (nonatomic, strong) NSDate * expires_time;
+
 
 
 @end

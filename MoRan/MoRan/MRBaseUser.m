@@ -7,18 +7,50 @@
 //
 
 #import "MRBaseUser.h"
+#import <MJExtension.h>
 
 @implementation MRBaseUser
 
+MJCodingImplementation
+
+@end
+
+
 //- (instancetype)initWithUserId:(NSString *)userId UserName:(NSString *)userName UserImage:(NSString *)userImage {
-//    
+//
 //    if (self = [super init]) {
 //        self.userId = userId;
 //        self.userName = userName;
 //        self.userImage = userImage;
 //    }
-//    
+//
 //    return self;
 //}
 
-@end
+//- (NSArray *)keysForEncoding
+//{
+//    [NSException raise:@"keysForEncoding" format:@"keysForEncoding must be implemented in child class!"];
+//
+//    //example implementation in child class:
+//    //return @[@"airtime", @"channelID", @"duration", @"programID", @"shortTitle"];
+//    return nil;
+//}
+//
+//-(void)encodeWithCoder:(NSCoder *)aCoder
+//{
+//    for(NSString* key in [self keysForEncoding])
+//    {
+//        [aCoder encodeObject:[self valueForKey:key] forKey:key];
+//    }
+//}
+//
+//-(id)initWithCoder:(NSCoder *)aDecoder
+//{
+//    self = [super init];
+//    if (self) {
+//        for (NSString* key in [self keysForEncoding]) {
+//            [self setValue:[aDecoder decodeObjectForKey:key] forKey:key];
+//        }
+//    }
+//    return self;
+//}

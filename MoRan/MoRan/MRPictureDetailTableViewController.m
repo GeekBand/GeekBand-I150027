@@ -9,6 +9,7 @@
 #import "MRPictureDetailTableViewController.h"
 #import "PictureDetailSetting.h"
 #import "TextUtilities.h"
+#import "MRPicture.h"
 
 @interface MRPictureDetailTableViewController ()
 
@@ -52,7 +53,16 @@
 - (void)setComponents {
 #warning Potentially incomplete method implementation.
     //设置图片
-    [self.publishImage setImage:[UIImage imageWithContentsOfFile:self.message.imagePath]];
+    
+    __weak MRPictureDetailTableViewController * weakSelf = self;
+    [self.message.picture setImageForSender:self.publishImage Compressed:NO Completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        
+        if (error == nil) {
+            
+            NSArray * rowsToReload = @[[NSIndexPath indexPathForRow:0 inSection:0]];
+            [weakSelf.tableView reloadRowsAtIndexPaths:rowsToReload withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }];
     
     //设置文字
     [self.publishText setText:self.message.text];
@@ -78,8 +88,14 @@
     
     CGFloat height;
     if (indexPath.row == 0) {
-        UIImageView * view = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:self.message.imagePath]];
-        height = tableView.frame.size.width * view.frame.size.height / view.frame.size.width;
+        if (self.publishImage.image == nil) {
+            
+            height = 300;
+        } else {
+            
+            UIImageView * view = [[UIImageView alloc] initWithImage:self.publishImage.image];
+            height = tableView.frame.size.width * view.frame.size.height / view.frame.size.width;
+        }
     } else {
         height = MRDetailTextCellHeightExceptPublishText + [TextUtilities calculateHeightWithText:self.message.text TextWidth:self.publishText.frame.size.width Font:self.publishText.font];
     }
