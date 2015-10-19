@@ -16,6 +16,7 @@
 #import <MJExtension.h>
 #import "MRAccountInfo.h"
 #import "MRHistoryAccountInfo.h"
+#import "AppDelegate.h"
 
 
 #import "MRRequestModelSquareLocationList.h"
@@ -73,16 +74,16 @@
 //            MRLog(@"%@", error);
 //        }];
         
-        [MRRequestPublish publishWithImage:[UIImage imageNamed:@"2.png"] Longitude:120.111111 Latitude:30.111111 Address:@"杭州市" Title:@"玉泉校区" Comment:@"hello" Success:^ {
-            
-//            MRLog(@"%@", response);
-        } Failure:^(NSError *error) {
-            
-            [MRNetworkinigTool handleError:error
-                                   Handler:nil];
-            MRLog(@"%@", error);
-            
-        }];
+//        [MRRequestPublish publishWithImage:[UIImage imageNamed:@"2.png"] Longitude:120.111111 Latitude:30.111111 Address:@"杭州市" Title:@"玉泉校区" Comment:@"hello" Success:^ {
+//            
+////            MRLog(@"%@", response);
+//        } Failure:^(NSError *error) {
+//            
+//            [MRNetworkinigTool handleError:error
+//                                   Handler:nil];
+//            MRLog(@"%@", error);
+//            
+//        }];
         
 //        [MRNetworkinigTool get:[MRRequestPrefix stringByAppendingString:@"comment"] parameters:[[[MRRequestModelSquareLocationListComment alloc] initWithPictureId:@"4174"] keyValues] priority:NSQualityOfServiceUserInitiated success:^(id responseObject) {
 //            
@@ -102,6 +103,9 @@
             
             success();
         }
+        
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [appDelegate login];
         
         
     } failure:^(NSError * error){

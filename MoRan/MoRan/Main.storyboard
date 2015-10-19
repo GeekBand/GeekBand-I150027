@@ -205,7 +205,7 @@
         <!--Navigation Controller-->
         <scene sceneID="d5h-DY-EKo">
             <objects>
-                <navigationController id="xmz-MB-w8A" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MRLoginViewController" id="xmz-MB-w8A" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="IVp-7B-92x" customClass="MRNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1213,6 +1213,6 @@
         <image name="square" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UQe-XV-m7F"/>
+        <segue reference="ofi-UZ-t6p"/>
     </inferredMetricsTieBreakers>
 </document>

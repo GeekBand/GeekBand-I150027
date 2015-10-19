@@ -30,7 +30,7 @@
     
     [MRNetworkinigTool get:url parameters:[[[MRRequestModelSquareLocationList alloc] initWithLongitude:location.coordinate.longitude Latitude:location.coordinate.latitude Distance:distance] keyValues] priority:NSQualityOfServiceUserInitiated success:^(id responseObject) {
         
-        __block MRMessageArray * messageArray = [MRMessageArray new];
+        MRMessageArray * messageArray = [MRMessageArray new];
         
         if ([[responseObject class] isSubclassOfClass:[NSDictionary class]]) {
             
@@ -41,6 +41,7 @@
                 for (id obj in data) {
                     
                     __block MRMainPublishMessage * publishMessage = [MRMainPublishMessage new];
+                    [messageArray addObject:publishMessage];
                     CGFloat longitude = 0.0;
                     CGFloat latitude = 0.0;
                     NSString * address = nil;
@@ -49,7 +50,7 @@
                     
                     if ([[obj class] isSubclassOfClass:[NSDictionary class]]) {
                         
-//                        地点信息
+                        //地点信息
                         id node = [obj valueForKey:@"node"];
                         if ([[node class] isSubclassOfClass:[NSDictionary class]]) {
                             id geo = [node objectForKey:@"ST_AsText(geom)"];
@@ -74,7 +75,7 @@
                                 dis = [(NSString *)distance floatValue];
                             }
                         }
-//                        图片信息
+                        //图片信息
                         id pic = [obj valueForKey:@"pic"];
                         if ([[pic class] isSubclassOfClass:[NSArray class]]) {
                             
@@ -116,19 +117,14 @@
                                 
                             }
                         }
-                        
                     }
-                    
                 }
             }
             
         }
         
     }
-                   failure:^(NSError *error) {
-        
-        
-    }];
+                   failure:failure];
 
 }
 

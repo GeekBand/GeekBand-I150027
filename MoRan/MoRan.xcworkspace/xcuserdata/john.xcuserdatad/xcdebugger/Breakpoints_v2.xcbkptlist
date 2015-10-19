@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MoRan/MRRequestLogin.m"
-            timestampString = "466867997.218343"
+            timestampString = "466908885.324706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "+loginWithEmail:Password:Success:Failure:"
             landmarkType = "5">
          </BreakpointContent>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MoRan/MRRequestLogin.m"
-            timestampString = "466867477.677574"
+            timestampString = "466908885.324706"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "+loginWithEmail:Password:Success:Failure:"
             landmarkType = "5">
             <Locations>
@@ -321,54 +321,6 @@
             endingLineNumber = "117"
             landmarkName = "-chooseCityButtonClicked:"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MoRan/MRRequestLogin.m"
-            timestampString = "466868049.725042"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "+loginWithEmail:Password:Success:Failure:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__58+[MRRequestLogin loginWithEmail:Password:Success:Failure:]_block_invoke_2"
-                  moduleName = "MoRan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/john/Documents/GeekBand-I150027/MoRan/MoRan/MRRequestLogin.m"
-                  timestampString = "466873162.569691"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "12">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__58+[MRRequestLogin loginWithEmail:Password:Success:Failure:]_block_invoke_3"
-                  moduleName = "MoRan"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/john/Documents/GeekBand-I150027/MoRan/MoRan/MRRequestLogin.m"
-                  timestampString = "466873162.569951"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "79"
-                  endingLineNumber = "79"
-                  offsetFromSymbolStart = "38">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

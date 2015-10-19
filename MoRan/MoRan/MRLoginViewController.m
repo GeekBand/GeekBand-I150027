@@ -123,7 +123,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 //登录成功的处理都在login函数中
-                [MRRequestLogin loginWithEmail:email Password:password Success:nil Failure:^(NSError * error) {
+                [MRRequestLogin loginWithEmail:email Password:password Success:^{
+                    
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }Failure:^(NSError * error) {
                     
                     if (error) {
                         

@@ -45,6 +45,7 @@
 }
 
 
+
 + (void)logout {
     
     [BLUtility removeFile:accountInfoPath];

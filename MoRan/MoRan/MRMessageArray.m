@@ -55,4 +55,9 @@
     return [self.messageArray objectAtIndex:index];
 }
 
+- (void)addObject:(nonnull id)object{
+    
+    [self.messageArray addObject:object];
+}
+
 @end

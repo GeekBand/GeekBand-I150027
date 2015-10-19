@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MRAccountInfoTool.h"
 
 @interface AppDelegate ()
 
@@ -14,6 +15,25 @@
 
 @implementation AppDelegate
 
+- (void)logout {
+    
+    [MRAccountInfoTool logout];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UINavigationController * controller = [storyboard instantiateViewControllerWithIdentifier:@"MRLoginViewController"];
+    self.window.rootViewController = controller;
+}
+
+- (void)login {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UINavigationController * controller = [storyboard instantiateViewControllerWithIdentifier:@"MRMainViewController"];
+    
+    self.window.rootViewController = controller;
+}
+
+
+#pragma mark - AppDelegate Methods
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

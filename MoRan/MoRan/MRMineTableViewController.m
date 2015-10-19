@@ -13,6 +13,7 @@
 #import "MRAccountInfoTool.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MRPublishTableViewController.h"
+#import "AppDelegate.h"
 
 @interface MRMineTableViewController ()
 
@@ -115,6 +116,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 #warning Potentially incomplete methods implementation.
     
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
         
         if (isLogin) {
@@ -124,6 +126,7 @@
                 [self performSegueWithIdentifier:@"ChangeName" sender:self];
                 
             } else if (indexPath.row == 1) {//Set my Image
+                
                 
                 UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                           delegate:self
@@ -144,7 +147,10 @@
                     self.userName.text = @"您还没有登录";
                     self.userId.text = nil;
                     
-                    [MRAccountInfoTool logout];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    
+                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    [appDelegate logout];
                     
                 }];
                 [alertController addAction:confirmAction];

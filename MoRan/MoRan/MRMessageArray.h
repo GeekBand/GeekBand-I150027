@@ -18,4 +18,5 @@
 
 - (id)objectAtIndex:(NSUInteger)index;
 
+- (void)addObject:(nonnull id)object;
 @end
