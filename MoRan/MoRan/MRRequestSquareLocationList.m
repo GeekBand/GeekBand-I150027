@@ -20,28 +20,63 @@
 #import "MRResponseSquareLocationListComment.h"
 #import "MRResponseSquareLocationListCommentData.h"
 
+//static int locationCount;
+
+
+
+@interface MRRequestSquareLocationList ()
+
+@property (atomic, assign) NSInteger locationCount;
+
+@property (nonatomic, assign) Success success;
+
+@property (nonatomic, strong) NSMutableArray * messageArray;
+
+@property (nonatomic, assign) NSInteger locationSum;
+
+@end
+
 @implementation MRRequestSquareLocationList
 
-+ (void)locationListRequestWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance Success:(void (^)(id))success Failure:(void (^)(NSError *))failure {
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.locationCount = 0;
+    }
+    return self;
+}
+
+- (void)locationListRequestWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance Success:(Success)success Failure:(void (^)(NSError *))failure {
     
     NSString * url = [MRRequestPrefix stringByAppendingString:@"node/list"];
     
     NSString * commentURL = [MRRequestPrefix stringByAppendingString:@"comment"];
     
+    self.success = success;
+    
+    __weak typeof(self) weakSelf = self;
+    
     [MRNetworkinigTool get:url parameters:[[[MRRequestModelSquareLocationList alloc] initWithLongitude:location.coordinate.longitude Latitude:location.coordinate.latitude Distance:distance] keyValues] priority:NSQualityOfServiceUserInitiated success:^(id responseObject) {
         
-        MRMessageArray * messageArray = [MRMessageArray new];
+        MRLog(@"Get Location Array");
+        
+        weakSelf.messageArray = [NSMutableArray new];
         
         if ([[responseObject class] isSubclassOfClass:[NSDictionary class]]) {
             
             id data = [responseObject valueForKey:@"data"];
             if ([[data class] isSubclassOfClass:[NSDictionary class]]) {
                 
+                self.locationSum = [(NSDictionary *)data count];
+                
                 //遍历地址列表
                 for (id obj in data) {
                     
+                    
                     __block MRMainPublishMessage * publishMessage = [MRMainPublishMessage new];
-                    [messageArray addObject:publishMessage];
+                    [weakSelf.messageArray addObject:publishMessage];
                     CGFloat longitude = 0.0;
                     CGFloat latitude = 0.0;
                     NSString * address = nil;
@@ -75,18 +110,20 @@
                                 dis = [(NSString *)distance floatValue];
                             }
                         }
-                        //图片信息
+                        //图片信息，得到该地点的所有图片和评论
                         id pic = [obj valueForKey:@"pic"];
                         if ([[pic class] isSubclassOfClass:[NSArray class]]) {
                             
-                            //没有提供Title，只能从这里得到了，无语
+                            //node没有提供Title，只能从这里得到了，无语
                             NSArray * picArray = [MRResponseSquareLocationListPicture objectArrayWithKeyValuesArray:pic];
                             
                             title = ((MRResponseSquareLocationListPicture *)picArray[0]).title;
                             
-                            publishMessage.location = [[MRBaseLocation alloc] initWithLongitude:longitude Latitude:latitude Address:address Title:title];
+                            publishMessage.location = [[MRDetailLocation alloc] initWithLongitude:longitude Latitude:latitude Address:address Title:title];
                             
                             publishMessage.imageArrayWithText = [NSMutableArray new];
+                            
+                            __block NSInteger sum = [picArray count];
                             
                             
                             //对每个图片发送评论请求
@@ -113,6 +150,11 @@
                                     
                                     [publishMessage.imageArrayWithText addObject:imageWithText];
                                     
+                                    if (sum == [publishMessage.imageArrayWithText count]) {
+                                        
+                                        [self locationCountIncrease];
+                                    }
+                                    
                                 } failure:failure];
                                 
                             }
@@ -128,6 +170,15 @@
 
 }
 
+- (void)locationCountIncrease {
+    
+    self.locationCount++;
+    
+    if (self.locationCount == self.locationSum) {
+        
+        self.success(self.messageArray);
+    }
+}
 
 
 @end

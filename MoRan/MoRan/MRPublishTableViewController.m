@@ -127,6 +127,8 @@
         return;
     }
     
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
     [self cleanComponents];
 }
 

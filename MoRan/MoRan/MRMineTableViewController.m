@@ -14,6 +14,10 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "MRPublishTableViewController.h"
 #import "AppDelegate.h"
+#import "MRAccountInfoTool.h"
+#import "MRAccountInfo.h"
+#import "MRRequestMineGetImage.h"
+#import <SDWebImage/UIButton+WebCache.h>
 
 @interface MRMineTableViewController ()
 
@@ -45,6 +49,8 @@
     self.textArray = [[NSArray alloc] initWithObjects:@"更改昵称", @"设置头像", @"注销登录", @"评价我们", @"关注我们", @"官方网站", nil];
     
     self.imagePicker = [[UIImagePickerController alloc] init];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -53,6 +59,34 @@
     
     ((MRTabBar *)self.tabBarController.tabBar)._delegate = self;
 }
+
+#pragma mark - Initialize Methods
+
+- (void)initComponents {
+    
+    MRAccountInfo * account = [MRAccountInfoTool getAccountInfo];
+    
+    if (account.userName) {
+        self.userName.text = account.userName;
+    }
+    if (account.userImage) {
+        
+        NSString * url = [MRRequestPrefix stringByAppendingString:[NSString stringWithFormat:@"user/show?user_id=%@", account.userId]];
+        
+        [self.userImage sd_setBackgroundImageWithURL:[NSURL URLWithString:url] forState:UIControlStateNormal completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+            if (error) {
+                
+                [MRNetworkinigTool showReminderWithString:@"头像图片加载失败"];
+            }
+        }];
+    }
+    if (account.email) {
+        
+        self.userId.text = account.email;
+    }
+}
+
 
 #pragma mark - TableViewDelegate and TableViewDataSource Method
 
@@ -308,9 +342,15 @@
             
             [self.userImage setImage:image forState:UIControlStateNormal];
             
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
         } Failure:^(NSError * error) {
             
-            [MRNetworkinigTool showReminderWithString:@"上传图片失败"];
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                [MRNetworkinigTool showReminderWithString:@"上传图片失败"];
+            }];
+            
         }];
     } else {
         

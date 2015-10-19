@@ -10,7 +10,7 @@
 
 @implementation MRImageWithText
 
-- (instancetype)initWithPicture:(MRPicture *)picture Text:(NSString *)text PublishTime:(NSDate *)publishTime User:(MRBaseUser *)user Location:(MRBaseLocation *)location{
+- (instancetype)initWithPicture:(MRPicture *)picture Text:(NSString *)text PublishTime:(NSDate *)publishTime User:(MRBaseUser *)user Location:(MRDetailLocation *)location{
     if (self = [super init]) {
         self.text = text;
         self.picture = picture;

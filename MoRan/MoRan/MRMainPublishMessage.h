@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "MRImageWithText.h"
-#import "MRBaseLocation.h"
+#import "MRDetailLocation.h"
 
 @interface MRMainPublishMessage : NSObject
 
-@property (nonatomic, strong)MRBaseLocation * location;
+@property (nonatomic, strong) MRDetailLocation * location;
 @property (nonatomic, copy)NSString * locationText;
 @property (nonatomic, strong)NSMutableArray * imageArrayWithText;
 

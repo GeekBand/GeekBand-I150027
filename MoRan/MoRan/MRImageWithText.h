@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MRBaseUser.h"
 
-@class MRBaseLocation;
+@class MRDetailLocation;
 
 @class MRPicture;
 
@@ -19,8 +19,8 @@
 @property(nonatomic, strong)MRPicture * picture;
 @property(nonatomic, strong)NSDate * publishTime;
 @property(nonatomic, strong)MRBaseUser * user;
-@property(nonatomic, strong)MRBaseLocation * location;
+@property(nonatomic, strong)MRDetailLocation * location;
 
-- (instancetype)initWithPicture:(MRPicture *)picture Text:(NSString *)text PublishTime:(NSDate *)publishTime User:(MRBaseUser *)user Location:(MRBaseLocation *)location;
+- (instancetype)initWithPicture:(MRPicture *)picture Text:(NSString *)text PublishTime:(NSDate *)publishTime User:(MRBaseUser *)user Location:(MRDetailLocation *)location;
 
 @end

@@ -14,11 +14,16 @@
 #import "MRNetworkinigTool.h"
 #import <MJRefresh.h>
 #import "MoRan-Swift.h"
+#import "MRDetailLocation.h"
 
 @interface MRMainTableViewController ()
 
 @property(nonatomic, strong)UIImage * takenImage;
 @property(nonatomic, assign)BOOL imageIsFromCamera;
+
+@property(nonatomic, strong) MRBaseLocation * userLocation;
+
+@property (nonatomic, strong) AMapSearchAPI * search;
 
 @end
 
@@ -32,7 +37,6 @@
     
     self.messageArray = [[MRMessageArray alloc] init];
     
-    [self initRefresh];
     
     //定位管理
     self.locationManager = [CLLocationManager new];
@@ -55,11 +59,13 @@
     
     self.rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.rightBarButton setTitle:@"杭州" forState:UIControlStateNormal];
-    [self.rightBarButton setTitle:@"haha" forState:UIControlStateSelected];
     [self.rightBarButton addTarget:self action:@selector(chooseCityButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.rightBarButton setFrame:CGRectMake(0, 0, 48, 24)];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBarButton];
     
+    [self initRefresh];
+    
+    [self initSearch];
     
 }
 
@@ -68,6 +74,8 @@
     [super viewWillAppear:animated];
     
     ((MRTabBar *)self.tabBarController.tabBar)._delegate = self;
+    
+    [self.locationManager startUpdatingLocation];
 }
 
 #pragma mark - Custom Class Methods
@@ -84,11 +92,7 @@
     tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 
-            //刷新请求
-            
-            //加载数据
-            [tableView reloadData];
-            [tableView.header endRefreshing];
+            [self.locationManager startUpdatingLocation];
         });
     }];
     tableView.header.automaticallyChangeAlpha = YES;
@@ -96,16 +100,71 @@
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             
-            
+            self.userLocation.distance *= 2;
             //刷新请求
-            
-            //加载数据
-            [tableView reloadData];
-            [tableView.footer endRefreshing];
+            [self.messageArray refreshWithLocation:self.userLocation Distance:self.userLocation.distance Complete:^(NSError *error) {
+                
+                if (error) {
+                    
+                    MRLog(@"LocationListRequest fails when the distance increases.");
+                } else {
+                    
+                    //加载数据
+                    [tableView reloadData];
+                }
+                
+                [tableView.footer endRefreshing];
+                
+            }];
         });
     }];
     footer.hidden = YES;
     tableView.footer = footer;
+}
+
+- (void)initSearch {
+    
+    self.search = [AMapSearchAPI new];
+    self.search.delegate = self;
+}
+
+- (void)searchLocation {
+    
+    AMapGeocodeSearchRequest *geo = [[AMapGeocodeSearchRequest alloc] init];
+    geo.address = self.rightBarButton.titleLabel.text;
+    
+    [self.search AMapGeocodeSearch:geo];
+}
+
+- (void)request {
+    
+    __weak UITableView *tableView = self.tableView;
+    
+    [self.messageArray refreshWithLocation:self.userLocation Distance:self.userLocation.distance Complete:^(NSError *error) {
+        
+        if (error) {
+            
+            
+            MRLog(@"LocationListRequest fails!");
+            [MRNetworkinigTool handleError:error Handler:nil];
+            
+        } else {
+            
+            [tableView reloadData];
+        }
+        
+        if ([tableView.header isRefreshing]) {
+            
+            [tableView.header endRefreshing];
+        }
+        
+        if ([tableView.footer isRefreshing]) {
+            
+            [tableView.footer endRefreshing];
+        }
+        
+    }];
+
 }
 
 #pragma mark - Custom Event Methods
@@ -163,6 +222,13 @@
     
     if ([self.messageArray count] > indexPath.section) {
         MRMainPublishMessage *message = [self.messageArray objectAtIndex:indexPath.section];
+        
+        NSInteger dis = 500;
+        while (message.location.distance > dis) {
+            dis *= 2;
+        }
+        self.navigationController.title = [NSString stringWithFormat:@"附近%li米内", (long)dis];
+        
         [cell setLocationText:message.locationText];
         [cell setImageScrollViewImageWithText:message.imageArrayWithText IndexPath:indexPath];
     }
@@ -335,6 +401,8 @@
     switch (status) {
         case kCLAuthorizationStatusNotDetermined: {
             MRLog(@"User still thinking..");
+            
+            [self searchLocation];
         } break;
         case kCLAuthorizationStatusDenied: {
             
@@ -376,9 +444,41 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+#warning Potentially incomplete method implementation.
+    
     CLLocation *location = [locations lastObject];
-    NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
+    self.userLocation = [[MRBaseLocation alloc] initWithLongitude:location.coordinate.longitude Latitude:location.coordinate.latitude];
+    self.userLocation.distance = 500;
+    
+    [self.locationManager stopUpdatingLocation];
+    
+    MRLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
+    
+    [self request];
+    
 }
+
+#pragma mark - AMapSearchDelegate
+
+- (void)onGeocodeSearchDone:(AMapGeocodeSearchRequest *)request response:(AMapGeocodeSearchResponse *)response
+{
+    if (response.geocodes.count == 0)
+    {
+        return;
+    }
+    
+    
+    AMapGeocode * geocode = response.geocodes[0];
+    
+    self.userLocation = [[MRBaseLocation alloc] initWithLongitude:geocode.location.longitude Latitude:geocode.location.latitude];
+    
+    self.userLocation.distance = 500;
+    
+    [self request];
+    
+    MRLog(@"lat%f - lon%f", geocode.location.latitude, geocode.location.longitude);
+}
+
 
 #pragma mark - Segue Methods
 

@@ -8,6 +8,17 @@
 
 #import "MRMessageArray.h"
 #import "MRBaseLocation.h"
+#import "MRRequestSquareLocationList.h"
+
+@interface MRMessageArray ()
+
+@property(nonatomic, strong) NSMutableArray * messageArray;
+
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+
+@property (nonatomic, assign) NSInteger distance;
+
+@end
 
 @implementation MRMessageArray
 
@@ -15,6 +26,10 @@
     if (self = [super init]) {
         
         self.messageArray = [[NSMutableArray alloc] init];
+        
+        self.coordinate = CLLocationCoordinate2DMake(90, 0);
+        
+        self.distance = 0;
         
 //        for (int i = 1; i <= 5; i++) {
 //            
@@ -42,7 +57,32 @@
     return self;
 }
 
-- (void)refreshWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance {
+- (void)refreshWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance Complete:(void (^)(NSError * error))handler {
+    
+    if (distance != self.distance || MAMetersBetweenMapPoints(MAMapPointForCoordinate(location.coordinate), MAMapPointForCoordinate(self.coordinate)) > 10) {
+        
+        MRRequestSquareLocationList * request = [[MRRequestSquareLocationList alloc] init];
+        
+        [request locationListRequestWithLocation:location Distance:distance Success:^(NSMutableArray *array) {
+            
+            self.messageArray = array;
+            
+            self.distance = distance;
+            
+            self.coordinate = location.coordinate;
+            
+            handler(nil);
+            
+        } Failure:^(NSError * error) {
+            
+            handler(error);
+        }];
+        
+    } else {
+        
+        handler(nil);
+    }
+    
     
     
 }

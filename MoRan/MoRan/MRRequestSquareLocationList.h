@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MRBaseLocation.h"
+
+typedef void(^Success)(NSMutableArray * array);
 
 @interface MRRequestSquareLocationList : NSObject
+
+
+- (void)locationListRequestWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance Success:(Success)success Failure:(void (^)(NSError *))failure;
 
 @end

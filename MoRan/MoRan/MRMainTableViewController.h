@@ -15,7 +15,7 @@
 
 
 
-@interface MRMainTableViewController : UITableViewController < UITableViewDelegate, UITableViewDataSource, MRMainMessageImageButtonDelegate, MRTabBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate ,CLLocationManagerDelegate>
+@interface MRMainTableViewController : UITableViewController < UITableViewDelegate, UITableViewDataSource, MRMainMessageImageButtonDelegate, MRTabBarDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate ,CLLocationManagerDelegate, AMapSearchDelegate>
 
 
 @property(nonatomic, strong)MRMessageArray * messageArray;

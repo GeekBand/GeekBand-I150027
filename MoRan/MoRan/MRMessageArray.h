@@ -12,11 +12,13 @@
 
 @interface MRMessageArray : NSObject
 
-@property(atomic, strong)NSMutableArray * messageArray;
 
 - (NSUInteger)count;
 
-- (id)objectAtIndex:(NSUInteger)index;
+- (nonnull id)objectAtIndex:(NSUInteger)index;
 
 - (void)addObject:(nonnull id)object;
+
+- (void)refreshWithLocation:(MRBaseLocation *)location Distance:(NSInteger)distance Complete:(void (^)(NSError * error))handler;
+
 @end

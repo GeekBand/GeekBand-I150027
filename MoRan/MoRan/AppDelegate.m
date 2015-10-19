@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MRAccountInfoTool.h"
+#import "NetworkRequestSetting.h"
+#import <AMapSearchKit/AMapSearchKit.h>
 
 @interface AppDelegate ()
 
@@ -37,6 +39,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [AMapSearchServices sharedServices].apiKey = APIKEY;
+    
     return YES;
 }
 

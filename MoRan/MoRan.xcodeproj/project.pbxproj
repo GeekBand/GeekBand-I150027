@@ -16,6 +16,10 @@
 		5247000F1BD3D8CB008E8EED /* MRResponsePublishPictureData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5247000E1BD3D8CB008E8EED /* MRResponsePublishPictureData.m */; settings = {ASSET_TAGS = (); }; };
 		524700121BD3EC8B008E8EED /* MRResponseSquareLocationListComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 524700111BD3EC8B008E8EED /* MRResponseSquareLocationListComment.m */; settings = {ASSET_TAGS = (); }; };
 		524700151BD3ED0D008E8EED /* MRResponseSquareLocationListCommentData.m in Sources */ = {isa = PBXBuildFile; fileRef = 524700141BD3ED0D008E8EED /* MRResponseSquareLocationListCommentData.m */; settings = {ASSET_TAGS = (); }; };
+		5247001A1BD484ED008E8EED /* MRRequestModelMineGetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 524700191BD484ED008E8EED /* MRRequestModelMineGetImage.m */; settings = {ASSET_TAGS = (); }; };
+		5247001D1BD48573008E8EED /* MRRequestMineGetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5247001C1BD48573008E8EED /* MRRequestMineGetImage.m */; settings = {ASSET_TAGS = (); }; };
+		524700201BD48927008E8EED /* MRRequestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5247001F1BD48927008E8EED /* MRRequestBase.m */; settings = {ASSET_TAGS = (); }; };
+		524700231BD4E68D008E8EED /* MRDetailLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 524700221BD4E68D008E8EED /* MRDetailLocation.m */; settings = {ASSET_TAGS = (); }; };
 		525C141D1B849077007CFF6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 525C141C1B849077007CFF6B /* main.m */; };
 		525C14201B849077007CFF6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 525C141F1B849077007CFF6B /* AppDelegate.m */; };
 		525C14231B849077007CFF6B /* MRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 525C14221B849077007CFF6B /* MRMainViewController.m */; };
@@ -174,6 +178,14 @@
 		524700111BD3EC8B008E8EED /* MRResponseSquareLocationListComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRResponseSquareLocationListComment.m; sourceTree = "<group>"; };
 		524700131BD3ED0D008E8EED /* MRResponseSquareLocationListCommentData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRResponseSquareLocationListCommentData.h; sourceTree = "<group>"; };
 		524700141BD3ED0D008E8EED /* MRResponseSquareLocationListCommentData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRResponseSquareLocationListCommentData.m; sourceTree = "<group>"; };
+		524700181BD484ED008E8EED /* MRRequestModelMineGetImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestModelMineGetImage.h; sourceTree = "<group>"; };
+		524700191BD484ED008E8EED /* MRRequestModelMineGetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestModelMineGetImage.m; sourceTree = "<group>"; };
+		5247001B1BD48573008E8EED /* MRRequestMineGetImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestMineGetImage.h; sourceTree = "<group>"; };
+		5247001C1BD48573008E8EED /* MRRequestMineGetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestMineGetImage.m; sourceTree = "<group>"; };
+		5247001E1BD48927008E8EED /* MRRequestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRRequestBase.h; sourceTree = "<group>"; };
+		5247001F1BD48927008E8EED /* MRRequestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRRequestBase.m; sourceTree = "<group>"; };
+		524700211BD4E68D008E8EED /* MRDetailLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRDetailLocation.h; sourceTree = "<group>"; };
+		524700221BD4E68D008E8EED /* MRDetailLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRDetailLocation.m; sourceTree = "<group>"; };
 		525C14171B849077007CFF6B /* MoRan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoRan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		525C141B1B849077007CFF6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		525C141C1B849077007CFF6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -409,6 +421,25 @@
 			name = Square;
 			sourceTree = "<group>";
 		};
+		524700161BD48080008E8EED /* GetImage */ = {
+			isa = PBXGroup;
+			children = (
+				524700171BD4808C008E8EED /* Model */,
+				5247001B1BD48573008E8EED /* MRRequestMineGetImage.h */,
+				5247001C1BD48573008E8EED /* MRRequestMineGetImage.m */,
+			);
+			name = GetImage;
+			sourceTree = "<group>";
+		};
+		524700171BD4808C008E8EED /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				524700181BD484ED008E8EED /* MRRequestModelMineGetImage.h */,
+				524700191BD484ED008E8EED /* MRRequestModelMineGetImage.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		525C140E1B849077007CFF6B = {
 			isa = PBXGroup;
 			children = (
@@ -584,6 +615,8 @@
 		525C14481B86E6A7007CFF6B /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				5247001E1BD48927008E8EED /* MRRequestBase.h */,
+				5247001F1BD48927008E8EED /* MRRequestBase.m */,
 				52C43DC71BAAB07A00CFE36A /* MRRequestModelBase.h */,
 				52C43DC81BAAB07A00CFE36A /* MRRequestModelBase.m */,
 				52F86BAF1BC92CA600D2F4A2 /* MRRequestModelFileDataParameter.h */,
@@ -750,6 +783,8 @@
 			children = (
 				52EBA48E1BA0307300DC0017 /* MRBaseLocation.h */,
 				52EBA48F1BA0307300DC0017 /* MRBaseLocation.m */,
+				524700211BD4E68D008E8EED /* MRDetailLocation.h */,
+				524700221BD4E68D008E8EED /* MRDetailLocation.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -916,6 +951,7 @@
 		52F86BA01BC7EAFA00D2F4A2 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
+				524700161BD48080008E8EED /* GetImage */,
 				52F86BAA1BC90E3C00D2F4A2 /* SetImage */,
 				52F86BA11BC7EB1400D2F4A2 /* ChangeName */,
 			);
@@ -1253,6 +1289,7 @@
 				52EBA4641B98007B00DC0017 /* MRMineTableViewController.m in Sources */,
 				529165EE1B8965D1007E764B /* MRMineViewController.m in Sources */,
 				529613FE1BAC01F900BA0822 /* MRResponseSignUpData.m in Sources */,
+				524700201BD48927008E8EED /* MRRequestBase.m in Sources */,
 				529614451BB2BB6A00BA0822 /* MRResponseLoginData.m in Sources */,
 				52F86BB71BCA9B6600D2F4A2 /* MRPicture.m in Sources */,
 				52F86B9F1BC7E82000D2F4A2 /* MRChangeNameViewController.m in Sources */,
@@ -1292,13 +1329,16 @@
 				52F86BC21BD0B09200D2F4A2 /* BaseMapViewController.m in Sources */,
 				52EBA4421B934F2900DC0017 /* MRMainMessageImageButton.m in Sources */,
 				52EBA43C1B9347EC00DC0017 /* MRMainMessageCell.m in Sources */,
+				5247001A1BD484ED008E8EED /* MRRequestModelMineGetImage.m in Sources */,
 				52EBA4701B9A9B2E00DC0017 /* MRPublishTableViewController.m in Sources */,
+				524700231BD4E68D008E8EED /* MRDetailLocation.m in Sources */,
 				52EBA44F1B956CF500DC0017 /* UIFont+Bold.m in Sources */,
 				52EBA4551B96DBFC00DC0017 /* CALayer+Border.m in Sources */,
 				52F86BB11BC92CA600D2F4A2 /* MRRequestModelFileDataParameter.m in Sources */,
 				52F86BC91BD0C99D00D2F4A2 /* ReGeocodeAnnotation.m in Sources */,
 				52C43DBB1BA54D5000CFE36A /* MRNetworkinigTool.m in Sources */,
 				52F86BB41BC932F400D2F4A2 /* MRRequestMineSetImage.m in Sources */,
+				5247001D1BD48573008E8EED /* MRRequestMineGetImage.m in Sources */,
 				52EBA48D1BA000D300DC0017 /* MRBaseUser.m in Sources */,
 				52F86BDD1BD394E400D2F4A2 /* File.swift in Sources */,
 				52EBA4451B93E6B000DC0017 /* MRMainMessageImageScrollView.m in Sources */,
