@@ -8,6 +8,7 @@
 
 #import "MRSignUpNameViewController.h"
 #import "ImageUtilities.h"
+#import "MRRequestMineChangeName.h"
 
 @interface MRSignUpNameViewController ()
 
@@ -63,17 +64,49 @@
 
 #pragma mark - Custom Class Methods
 
-- (IBAction)doneButtonCliked:(id)sender {
-#warning Potentially incomplete method implementation.
-}
-
-- (IBAction)cancelButtonClicked:(id)sender {
-#warning Potentially incomplete method implementation.
-}
-
 - (void)cleanTextField {
     
     self.nameTextField = nil;
 }
+
+- (void)dismissView {
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Custom Event Methods
+
+- (IBAction)doneButtonCliked:(id)sender {
+#warning Potentially incomplete method implementation.
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [MRRequestMineChangeName changeNameWithNewName:self.nameTextField.text Success:^(id response) {
+        
+        
+        [weakSelf dismissView];
+    } Failure:^(NSError * error) {
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"设置昵称失败" message:@"你可以在登陆后，选择我的->设置昵称，再次更改你的名字" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction * action = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            
+            [weakSelf dismissView];
+        }];
+        
+        [alert addAction:action];
+        
+        [self presentingViewController];
+        
+    }];
+    
+}
+
+- (IBAction)cancelButtonClicked:(id)sender {
+#warning Potentially incomplete method implementation.
+    
+    [self dismissView];
+}
+
 
 @end

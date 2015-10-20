@@ -24,7 +24,7 @@
 
 @property (nonatomic, strong)CLLocationManager * locationManager;
 
-@property (strong, nonatomic) UIButton * rightBarButton;
+@property (strong, nonatomic) UIButton * leftBarButton;
 
 
 @end

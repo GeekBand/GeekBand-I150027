@@ -15,6 +15,7 @@
 #import <MJRefresh.h>
 #import "MoRan-Swift.h"
 #import "MRDetailLocation.h"
+#import "InvertGeoViewController.h"
 
 @interface MRMainTableViewController ()
 
@@ -57,11 +58,11 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.rightBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.rightBarButton setTitle:@"杭州" forState:UIControlStateNormal];
-    [self.rightBarButton addTarget:self action:@selector(chooseCityButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.rightBarButton setFrame:CGRectMake(0, 0, 48, 24)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBarButton];
+    self.leftBarButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.leftBarButton setTitle:@"杭州" forState:UIControlStateNormal];
+    [self.leftBarButton addTarget:self action:@selector(chooseCityButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.leftBarButton setFrame:CGRectMake(0, 0, 48, 24)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.leftBarButton];
     
     [self initRefresh];
     
@@ -131,7 +132,7 @@
 - (void)searchLocation {
     
     AMapGeocodeSearchRequest *geo = [[AMapGeocodeSearchRequest alloc] init];
-    geo.address = self.rightBarButton.titleLabel.text;
+    geo.address = self.leftBarButton.titleLabel.text;
     
     [self.search AMapGeocodeSearch:geo];
 }
@@ -493,6 +494,11 @@
         MRPictureDetailTableViewController * vc = segue.destinationViewController;
         
         vc.message = self.info;
+    } else if ([[segue identifier] isEqualToString:@"Map"]) {
+        
+        InvertGeoViewController * vc = segue.destinationViewController;
+        
+        vc.array = self.messageArray;
     }
 }
 

@@ -909,6 +909,11 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="附近1000米" id="Ats-2A-1IV">
                         <barButtonItem key="backBarButtonItem" title=" " id="6AV-aE-Zjf"/>
+                        <barButtonItem key="rightBarButtonItem" image="publish_location" id="X55-Ox-Y8a">
+                            <connections>
+                                <segue destination="yia-0x-zco" kind="show" identifier="Map" id="oqq-m2-tRM"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -920,6 +925,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GhT-Hd-GPi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-781.5" y="445.5"/>
+        </scene>
+        <!--Invert Geo View Controller-->
+        <scene sceneID="0lN-nF-azE">
+            <objects>
+                <viewController id="yia-0x-zco" customClass="InvertGeoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YRG-Ic-u20"/>
+                        <viewControllerLayoutGuide type="bottom" id="s9Y-5A-XXg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KMf-6h-aRF" customClass="Inver">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QbT-5j-6Jx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-231.5" y="-372.5"/>
         </scene>
         <!--查看照片-->
         <scene sceneID="l05-0I-FpU">
