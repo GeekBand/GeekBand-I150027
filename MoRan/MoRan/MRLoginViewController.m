@@ -10,6 +10,8 @@
 #import "MRRequestLogin.h"
 #import "NSString+Check.h"
 #import "MRNetworkinigTool.h"
+#import "MRAccountInfoTool.h"
+#import "MRHistoryAccountInfo.h"
 
 #define kOFFSET_FOR_KEYBOARD 30.0
 
@@ -34,6 +36,14 @@
     self.waitView.hidden = YES;
 
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    [self initWithHistoryLogin];
     
 }
 
@@ -92,6 +102,25 @@
 */
 
 #pragma mark - Custom Class Methods
+
+- (void)cleanTextField {
+    
+    self.emailTextField.text = nil;
+    
+    self.passwordTextField.text = nil;
+}
+
+- (void)initWithHistoryLogin {
+    
+    MRHistoryAccountInfo * accountinfo = [MRAccountInfoTool getHistoryAccountInfo];
+    
+    if (accountinfo != nil) {
+        
+        self.emailTextField.text = accountinfo.email;
+    }
+}
+
+#pragma mark - Custom Event Methods
 
 - (IBAction)loginButtonClicked:(id)sender {
 #warning Potentially incomplete method implementation.
@@ -218,12 +247,6 @@
     [self.passwordTextField resignFirstResponder];
 }
 
-- (void)cleanTextField {
-    
-    self.emailTextField.text = nil;
-    
-    self.passwordTextField.text = nil;
-}
 
 #pragma mark - TextFieldDelegate Methods
 
