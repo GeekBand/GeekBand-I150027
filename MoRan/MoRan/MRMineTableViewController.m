@@ -18,6 +18,7 @@
 #import "MRAccountInfo.h"
 #import "MRRequestMineGetImage.h"
 #import <SDWebImage/UIButton+WebCache.h>
+#import "MRChangeNameViewController.h"
 
 @interface MRMineTableViewController ()
 
@@ -51,11 +52,14 @@
     self.imagePicker = [[UIImagePickerController alloc] init];
     
     
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
+    
+    [self initComponents];
     
     ((MRTabBar *)self.tabBarController.tabBar)._delegate = self;
 }
@@ -157,7 +161,7 @@
             
             if (indexPath.row == 0) {//Change my name
                 
-                [self performSegueWithIdentifier:@"ChangeName" sender:self];
+                [self performSegueWithIdentifier:@"ChangeName" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
                 
             } else if (indexPath.row == 1) {//Set my Image
                 
@@ -390,6 +394,14 @@
         
         vc.takenImage = self.takenImage;
         vc.imageIsFromCamera = self.imageIsFromCamera;
+    }
+    
+    if ([[segue identifier] isEqualToString:@"Changename"]) {
+        
+        MRChangeNameViewController * vc = segue.destinationViewController;
+        
+        vc.frame = ((UITableViewCell *)sender).bounds;
+        
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "BaseMapViewController.h"
+#import "NetworkRequestSetting.h"
 
 @interface BaseMapViewController ()
 
@@ -17,6 +18,27 @@
 @implementation BaseMapViewController
 
 #pragma mark - Life Cycle
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    _isFirstAppear = YES;
+    
+    [self initTitle:self.title];
+    
+//    [self initBaseNavigationBar];
+    
+    [self initMapView];
+    
+    [self initSearch];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -30,25 +52,19 @@
     }
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewWillDisappear:(BOOL)animated {
     
-    _isFirstAppear = YES;
+    [super viewWillDisappear:animated];
     
-    [self initTitle:self.title];
-    
-    [self initBaseNavigationBar];
-    
-    [self initMapView];
-    
-    [self initSearch];
+    self.tabBarController.tabBar.hidden = NO;
 }
+
 
 #pragma mark - Utility
 
 - (void)clearMapView
 {
+    
     self.mapView.showsUserLocation = NO;
     
     [self.mapView removeAnnotations:self.mapView.annotations];
@@ -90,7 +106,13 @@
 
 - (void)initMapView
 {
+    [AMapSearchServices sharedServices].apiKey = APIKEY;
+    
+    self.mapView = [MAMapView new];
+    
     self.mapView.frame = self.view.bounds;
+    
+    self.mapView.logoCenter = CGPointMake(CGRectGetWidth(self.view.bounds) - 55, CGRectGetHeight(self.view.bounds) - 10);
     
     self.mapView.delegate = self;
     

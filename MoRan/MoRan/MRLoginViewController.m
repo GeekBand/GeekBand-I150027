@@ -159,9 +159,12 @@
                     
                     if (error) {
                         
-                        isError = true;
-                        
-                        [MRNetworkinigTool handleError:error Handler:nil];
+                        [MRNetworkinigTool handleError:error Handler:^(NSDictionary *whatever) {
+                            
+                            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil message:@"邮箱或者密码错误" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                            
+                            [alert show];
+                        }];
                     }
                 }];
             });

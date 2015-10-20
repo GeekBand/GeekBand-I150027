@@ -171,19 +171,34 @@
                         <viewControllerLayoutGuide type="top" id="oCI-yA-uc5"/>
                         <viewControllerLayoutGuide type="bottom" id="3CG-l3-SGe"/>
                     </layoutGuides>
-                    <view key="view" alpha="0.29999999999999999" contentMode="scaleToFill" id="eR2-4j-ck2">
+                    <view key="view" contentMode="scaleToFill" id="eR2-4j-ck2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hu4-jJ-lhm">
-                                <rect key="frame" x="26" y="236" width="323" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hu4-jJ-lhm">
+                                <rect key="frame" x="7" y="72" width="354" height="30"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GKO-VQ-Xtn"/>
+                                    <constraint firstAttribute="width" constant="354" id="vGU-QR-fbi"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="vGU-QR-fbi"/>
+                                    </mask>
+                                </variation>
                             </textField>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Hu4-jJ-lhm" firstAttribute="top" secondItem="oCI-yA-uc5" secondAttribute="bottom" constant="8" id="9nJ-Nz-tUl"/>
+                            <constraint firstItem="Hu4-jJ-lhm" firstAttribute="leading" secondItem="eR2-4j-ck2" secondAttribute="leadingMargin" constant="-9" id="ael-Mb-EJH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hu4-jJ-lhm" secondAttribute="trailing" constant="-10" id="z3b-Uz-ex6"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ORJ-Ef-KMJ">
                         <barButtonItem key="rightBarButtonItem" title="完成" id="yBe-ih-1v0">
@@ -934,12 +949,13 @@
                         <viewControllerLayoutGuide type="top" id="YRG-Ic-u20"/>
                         <viewControllerLayoutGuide type="bottom" id="s9Y-5A-XXg"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="KMf-6h-aRF" customClass="Inver">
+                    <view key="view" contentMode="scaleToFill" id="KMf-6h-aRF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QbT-5j-6Jx" userLabel="First Responder" sceneMemberID="firstResponder"/>

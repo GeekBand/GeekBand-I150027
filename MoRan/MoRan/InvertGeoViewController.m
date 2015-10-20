@@ -13,6 +13,7 @@
 #import "MRMessageArray.h"
 #import "MRImageWithText.h"
 #import "MRBaseLocation.h"
+#import "NetworkRequestSetting.h"
 
 #define RightCallOutTag 1
 #define LeftCallOutTag 2
@@ -34,10 +35,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     self.userLocationButton = [[MRUserLocationButton alloc] init];
     
     [self.userLocationButton addTarget:self action:@selector(userLocationButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    CGRect frame =  [[UIScreen mainScreen] bounds];
+    
+    CGRect bounds = CGRectMake(12, frame.origin.y - 12, 12, 12);
+    
+    self.userLocationButton.frame = bounds;
+    
     
     __weak InvertGeoViewController * weakSelf = self;
     
@@ -59,6 +67,10 @@
 {
     [super viewWillAppear:animated];
     
+    [[[UIApplication sharedApplication] keyWindow] addSubview:self.userLocationButton];
+    
+    [[[UIApplication sharedApplication] keyWindow] bringSubviewToFront:self.userLocationButton];
+    
 //    self.navigationController.toolbar.barStyle      = UIBarStyleBlack;
 //    self.navigationController.toolbar.translucent   = YES;
 //    [self.navigationController setToolbarHidden:NO animated:animated];
@@ -67,6 +79,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [self.userLocationButton removeFromSuperview];
     
 //    [self.navigationController setToolbarHidden:YES animated:animated];
 }

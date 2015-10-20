@@ -20,8 +20,7 @@
 
 - (instancetype)init {
     
-    CGRect frame =  [[UIScreen mainScreen] bounds];
-    self = [super initWithFrame:CGRectMake(12, frame.size.height - 12 - 12, 12, 12)];
+    self = [super init];
     
     if (self) {
         
@@ -35,6 +34,12 @@
     }
     
     return self;
+}
+
+- (void)dealloc {
+    
+    [self removeObserver:self forKeyPath:@"userTrackingModeChanged"];
+
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {

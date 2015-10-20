@@ -22,12 +22,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    CGRect nameFrame = self.nameTextField.frame;
-    nameFrame.origin.x = self.frame.origin.x;
-    nameFrame.origin.y = self.frame.origin.y;
-    nameFrame.size.width = self.frame.size.width;
-    nameFrame.size.height = self.frame.size.height;
-    self.nameTextField.frame = nameFrame;
+//    CGRect nameFrame = self.nameTextField.bounds;
+//    nameFrame.origin.x = self.frame.origin.x;
+//    nameFrame.origin.y = self.frame.origin.y;
+//    nameFrame.size.width = self.frame.size.width;
+//    nameFrame.size.height = self.frame.size.height;
+//    self.nameTextField.frame = nameFrame;
+    
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,12 +49,8 @@
         
         [MRAccountInfoTool saveAccountInfo:account];
         
-        MRMineTableViewController * controller = (MRMineTableViewController *)self.presentingViewController;
+        [self.navigationController popViewControllerAnimated:YES];
         
-        [controller dismissViewControllerAnimated:NO completion:^{
-            
-            controller.userName.text = name;
-        }];
         
     } Failure:^(NSError * error) {
         

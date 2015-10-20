@@ -10,12 +10,27 @@
 #import "MRAccountInfoTool.h"
 #import "NetworkRequestSetting.h"
 #import <AMapSearchKit/AMapSearchKit.h>
+#import <MAMapKit/MAMapKit.h>
 
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+
+- (void)configureAPIKey
+{
+    if ([APIKEY length] == 0)
+    {
+        NSString *reason = [NSString stringWithFormat:@"apiKey为空，请检查key是否正确设置。"];
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:reason delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        
+        [alert show];
+    }
+    
+    [MAMapServices sharedServices].apiKey = (NSString *)APIKEY;
+}
 
 - (void)logout {
     
@@ -39,8 +54,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    [AMapSearchServices sharedServices].apiKey = APIKEY;
     
     return YES;
 }

@@ -83,6 +83,11 @@
     
     NSMutableArray * accountArray = [NSMutableArray arrayWithContentsOfFile:filePath];
     
+    if (accountArray == nil) {
+        
+        accountArray = [NSMutableArray new];
+    }
+    
     for (int i = 0; i < [accountArray count]; i++) {
         
         NSDictionary * dic = [accountArray objectAtIndex:i];
@@ -90,11 +95,11 @@
         if ([dic[@"email"] isEqualToString:account.email]) {
             [accountArray removeObjectAtIndex:i];
             
-            [accountArray addObject:account.keyValues];
             
             break;
         }
     }
+    [accountArray addObject:account.keyValues];
     
     [accountArray writeToFile:filePath atomically:YES];
 }
