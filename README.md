@@ -16,7 +16,7 @@ Modules
 
 0. [Detail](#detail)
 
-0. [Login and Register](#login)
+0. [Login and Register](#login and register)
 
 Square
 -----------------------
