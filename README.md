@@ -16,7 +16,7 @@ Modules
 
 0. [Detail](#detail)
 
-0. [Login and Register](#login and register)
+0. [Login and Register](#login-and-register)
 
 Square
 -----------------------
@@ -42,8 +42,8 @@ Detail
 Login and Register
 ----------------------
 * I have registered an account:
-+ email:`helloword@moran.com`
-+ password:`a1234567`
+ + email:`helloword@moran.com`
+ + password:`a1234567`
 
 
 Reminder
